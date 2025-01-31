@@ -1,5 +1,5 @@
 
-import { LoginBtn } from "./Loginbtn"
+import { LoginBtn } from "../components/Loginbtn"
 
 export default function Home() {
   return (
