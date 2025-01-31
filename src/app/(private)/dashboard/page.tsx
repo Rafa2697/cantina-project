@@ -1,12 +1,12 @@
+
 import { getServerSession } from "next-auth"
-import { redirect } from "next/navigation"
 
 export default async function Page() {
 
     const session = await getServerSession()
 
     if(!session){
-        return redirect("/")
+        return console.log('Não está logado')
     }
   return (
     <div>
