@@ -1,20 +1,15 @@
 
-import { getServerSession } from "next-auth"
+import Cabecalho from "@/app/components/Cabecalho"
 
-export default async function Page() {
+export default function Page() {
 
-    const session = await getServerSession()
-
-    if(!session){
-        return console.log('Não está logado')
-    }
   return (
     <div>
-      <h1>Dashboard</h1>
-      <p>This page is only visible to authenticated users.</p>
-      <p>Olá, {session.user?.name}</p>
-      <p>{session.user?.image}</p>
-      <p>{session.user?.email}</p>
+      
+      <Cabecalho />
+      <h1>dashboard</h1>
+
+
     </div>
   )
 }

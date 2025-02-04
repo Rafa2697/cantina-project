@@ -5,7 +5,7 @@ import { MiddlewareConfig, NextRequest, NextResponse } from "next/server"
 
 const publicRoutes = [
     {path: '/signIn', wheAuthenticated: 'redirect'}, //Ele não pode acessar o sign-in se já estiver logado
-    {path: '/register', wheAuthenticated: 'redirect'}, //Ele não pode acessar o register se já estiver logado
+    {path: '/', wheAuthenticated: 'next'}, //Ele não pode acessar o register se já estiver logado
     {path: '/pricing', wheAuthenticated: 'next'}, // Ele pode acessar o pricing se não estiver logado
 ] as const
 
@@ -13,7 +13,7 @@ const REDIRECT_WHE_NOT_AUTHENTICATED = '/signIn'
 
 // Middleware to check if user is authenticated
 export function middleware(request: NextRequest){
-    const path = request.nextUrl.pathname
+    const path = request.nextUrl.pathname //
     const publicRoute = publicRoutes.find(route => route.path === path)
     const authToken = request.cookies.get('next-auth.session-token')
     console.log('authToken', authToken)

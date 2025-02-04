@@ -7,7 +7,7 @@ export default function Home() {
   
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center">
+    <main className=" h-auto flex gap-16 items-center justify-center bg-slate-400">
       <LoginCredentials/>
       <LoginBtn />
     </main>
