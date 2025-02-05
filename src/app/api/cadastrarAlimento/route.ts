@@ -23,7 +23,7 @@ export async function POST(request: Request){
             }
         })
 
-        return new Response('Sucess!', {status:200})
+        return new Response(JSON.stringify({ data: newAlimento }), { status: 201 });
     }catch(error){
         console.error(error);
         return new Response(JSON.stringify({ error: 'Erro ao inserir alimento' }), { status: 500 });
