@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { getSession } from 'next-auth/react';
-import Image from 'next/image'
 
 const Cabecalho: React.FC = () => {
     const [session, setSession] = useState<any>(null);
@@ -22,12 +21,22 @@ const Cabecalho: React.FC = () => {
 
 
     return (
-        <div className="bg-white px-4 py-2 shadow text-black flex justify-start items-center space-x-4">
-            <img src={session.user?.image} alt="perfil" className='rounded-full' />
-            <div>
-                <p>Olá, {session.user?.name}</p>
-                <p>{session.user?.email}</p>
-            </div>
+        <div className=" px-4 py-2 text-black flex flex-col justify-start items-center space-x-4">
+
+            {!session.user?.image ? (
+                <div>
+                    <p>Administrador</p>
+                    <p>Olá, {session.user?.name}</p>
+                </div>
+            ) : (
+                <div>
+                    <img src={session.user?.image} alt="perfil" className='rounded-full' />
+                    <p>{session.user?.email}</p>
+                </div>
+            )}
+
+
+
 
         </div>
     );
