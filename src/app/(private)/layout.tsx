@@ -35,11 +35,11 @@ export default function PrivateLayout({
                     <AppSidebar />
                     <SidebarTrigger />
                     <Providers>
-                    <h1>private</h1>
-                    {children}
-                </Providers>
+
+                        {children}
+                    </Providers>
                 </SidebarProvider>
-                
+
             </body>
         </html>
     );

@@ -3,9 +3,7 @@
 import {
     Sidebar,
     SidebarContent,
-    SidebarFooter,
     SidebarGroup,
-    SidebarHeader,
     SidebarGroupLabel,
     SidebarGroupContent,
     SidebarMenu,
@@ -26,7 +24,7 @@ const items = [
         icon: Home,
     },
     {
-        title: "Inbox",
+        title: "Pedidos",
         url: "/pricing",
         icon: ShoppingBag,
     },

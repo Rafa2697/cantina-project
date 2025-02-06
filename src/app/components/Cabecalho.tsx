@@ -16,6 +16,7 @@ const Cabecalho: React.FC = () => {
         fetchSession();
     }, []);
 
+    console.log(session?.user?.image)
     if (!session) {
         return <div>Carregando...</div>;
     }
@@ -31,8 +32,9 @@ const Cabecalho: React.FC = () => {
                 </div>
             ) : (
                 <div>
-                    <img src={session.user?.image} alt="perfil" className='rounded-full' />
-                    <p>{session.user?.email}</p>
+                    <img src={session.user.image} alt="perfil" className='rounded-full w-16 h-16 object-cover' />
+                    <p>Olá, {session.user?.name}</p>
+                    <p>{session?.user?.email}</p>
                 </div>
             )}
 
