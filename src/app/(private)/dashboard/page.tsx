@@ -12,14 +12,14 @@ export default function Page() {
   }
 
   return (
-    <div>
-      <h1>dashboard</h1>
+    <div className="w-full flex">
+      
       {!session.user?.image ? (
-        <div>
+        <div className="w-full">
           <DashAdministrador/>
         </div>
       ) : (
-        <div>
+        <div className="w-full">
           <DashClient/>
         </div>
       )}

@@ -1,9 +1,9 @@
-
+import CadastroItens from "./CadastroItens"
 
 export default  function DashAdministrador(){
     return(
         <div>
-            <p>Dashboard aadministrador</p>
+           <CadastroItens/>
         </div>
     )
 }

@@ -1,9 +1,9 @@
-
+import CardapioClient from "./CardapioClient"
 
 export default  function DashClient(){
     return(
         <div>
-            <p>Dashboard cliente</p>
+            <CardapioClient/>
         </div>
     )
 }

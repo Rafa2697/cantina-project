@@ -23,11 +23,12 @@ model User {
 model MenuItem {
   id          String    @id @default(uuid())
   name        String
-  description String
+  description String?
   price       Decimal
   category    Category  @relation(fields: [categoryId], references: [id])
   categoryId  String
   isAvailable Boolean   @default(true)
+  imagemURL   String?
   orderItems  OrderItem[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

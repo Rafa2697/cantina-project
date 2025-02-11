@@ -7,6 +7,9 @@ export async function GET(){
     const alimento = await prisma.menuItem.findMany({
         orderBy:{
             createdAt:'asc'
+        },
+        include:{
+            category:true
         }
     })
 
@@ -16,12 +19,13 @@ export async function GET(){
 export async function POST(request: Request){
     try{
         const data = await request.json()
-        const {name, description, price, categoryId, isAvailable} = data;
+        const {name, description, price, imagemURL, categoryId, isAvailable} = data;
         const newAlimento = await prisma.menuItem.create({
             data:{
                 name,
                 description,
                 price,
+                imagemURL,
                 categoryId,
                 isAvailable
             }
@@ -49,4 +53,29 @@ export async function DELETE(request:Request) {
        return new Response(JSON.stringify({error:'ERRO ao deletar alemento' }))
     }
     
+}
+
+export async function PUT(request:Request){
+    try{
+        const data = await request.json()
+        const {id, name, description, price,imagemURL, categoryId, isAvailable} = data
+
+        const updatedAlimento = await prisma.menuItem.update({
+            where: {
+                id
+            },
+            data:{
+                name,
+                description,
+                price,
+                imagemURL,
+                categoryId,
+                isAvailable
+            }
+        });
+        return new Response(JSON.stringify({ data: updatedAlimento }), { status: 200 });
+    } catch(error){
+        console.error(error)
+        return new Response(JSON.stringify({error: 'Erro ao atualizar'}), {status: 500})
+    }
 }

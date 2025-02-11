@@ -9,7 +9,7 @@ interface DataItem {
     isAvailable: boolean;
 }
 
-export default function Cardapio() {
+export default function CardapioClient() {
     const [data, setData] = useState<DataItem[]>([]);
     const fetchData = async () => {
         try {
