@@ -4,7 +4,11 @@ import { NextResponse } from "next/server";
 const prisma = new PrismaClient()
 
 export async function GET(){
-    const alimento = await prisma.menuItem.findMany()
+    const alimento = await prisma.menuItem.findMany({
+        orderBy:{
+            createdAt:'asc'
+        }
+    })
 
     return Response.json(alimento)
 }
