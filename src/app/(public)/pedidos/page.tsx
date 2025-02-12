@@ -1,12 +1,10 @@
 'use client'
 import Cardapio from "@/app/components/Cardapio"
 
-export default function Pricing() {
-
+export default function Pedidos() {
     return (
         <div>
-            <h1>cardapio</h1>
-            <Cardapio/>
+            <Cardapio />
         </div>
     )
 }

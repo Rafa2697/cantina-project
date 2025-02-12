@@ -131,7 +131,6 @@ export default function CadastroItens() {
 
     //Prencher formulario para edição
     const handleEdit = (item: DataItem) => {
-        console.log(item.id)
         setFormData({
             name: item.name,
             description: item.description,

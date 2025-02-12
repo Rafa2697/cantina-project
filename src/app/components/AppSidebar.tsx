@@ -25,7 +25,7 @@ const items = [
     },
     {
         title: "Pedidos",
-        url: "/pricing",
+        url: "/pedidosCliente",
         icon: ShoppingBag,
     },
     {
