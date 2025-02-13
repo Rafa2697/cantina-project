@@ -2,10 +2,12 @@ import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client"
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 const prisma = new PrismaClient()
 
-const handler =  NextAuth({
+const handler = NextAuth({
+
   // Configure one or more authentication providers
   providers: [
 
@@ -47,7 +49,7 @@ const handler =  NextAuth({
         if (!isValid) {
           throw new Error("Senha inválida");
         }
-        
+
         if (isValid) {
           console.log(`usuario ${user.id} logado`, credentials)
           // Retorne um objeto com as informações do usuário
