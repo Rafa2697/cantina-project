@@ -8,6 +8,15 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
+model Admin {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String?  @unique
+  password  String?
+  image     String?
+  createdAt DateTime @default(now())
+}
+
 model User {
   id        String    @id @default(cuid()) // NextAuth usa "cuid" por padrão
   name      String?
@@ -16,7 +25,6 @@ model User {
   image     String?
   accounts  Account[]
   sessions  Session[]
-  orders    Order[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -50,7 +58,6 @@ model MenuItem {
   categoryId  String
   isAvailable Boolean     @default(true)
   imagemURL   String?
-  orderItems  OrderItem[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
@@ -64,26 +71,27 @@ model Category {
 }
 
 model Order {
-  id        String      @id @default(uuid())
-  user      User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
-  userId    String?
-  status    OrderStatus @default(PENDING)
-  items     OrderItem[]
-  total     Decimal
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  id         String    @id @default(uuid()) // ID único do pedido
+  userName   String    // Nome do usuário autenticado pelo Google
+  userEmail  String    // Email do usuário autenticado pelo Google
+  status     String    @default("PENDING") // Status do pedido
+  totalPrice Decimal   // Preço total do pedido
+  createdAt  DateTime  @default(now()) // Data de criação
+  updatedAt  DateTime  @updatedAt // Data de atualização
+
+  items      OrderItem[] // Relacionamento com os itens do pedido
 }
 
 model OrderItem {
-  id         String   @id @default(uuid())
-  order      Order    @relation(fields: [orderId], references: [id])
-  orderId    String
-  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
-  menuItemId String
-  quantity   Int
-  price      Decimal
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id       String  @id @default(uuid()) // ID único do item no pedido
+  orderId  String  // Chave estrangeira para o pedido
+  foodId   String  // ID do alimento
+  name     String  // Nome do alimento
+  price    Decimal // Preço do item no momento do pedido
+  quantity Int     // Quantidade do item
+  subtotal Decimal // price * quantity
+
+  order    Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
 
 enum Role {

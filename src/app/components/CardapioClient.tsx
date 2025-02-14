@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import {useSession} from "next-auth/react";
 
 interface DataItem {
     id: string;
@@ -16,6 +17,7 @@ interface SelectedItem extends DataItem {
 export default function CardapioClient() {
     const [data, setData] = useState<DataItem[]>([]);
     const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
+    const {data: session } = useSession();
 
     const fetchData = async () => {
         try {
@@ -50,15 +52,23 @@ export default function CardapioClient() {
     const handleRemoveItem = (itemId: string) => {
         setSelectedItems(prev => prev.filter(item => item.id !== itemId));
     };
-    console.log(selectedItems)
+    console.log(selectedItems, session?.user?.name)
     const handleSubmitOrder = async () => {
+        if(!session?.user?.email){
+            alert('Você precisa estar logado para fazer o pedido')
+            return;
+        }
         try {
-            const response = await fetch('/api/items', {
+            const response = await fetch('/api/pedidos', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ items: selectedItems }),
+                body: JSON.stringify({ 
+                    items: selectedItems,
+                    email: session.user.email,
+                    name: session.user.name
+                }),
             });
             if (response.ok) {
                 alert('Pedido enviado com sucesso!');

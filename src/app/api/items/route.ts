@@ -1,24 +1,19 @@
+import { NextResponse } from 'next/server';
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()
-
-export async function GET(){
-
-}
-
-export async function POST(request:Request) {
+export async function GET() {
     try {
-        const data = await request.json()
-        const { id, price, quantity } = data;
-        const newOrderItem = await prisma.orderItem.create({
-            data:{
-                id,
-                quantity,
-                price
-            }
-        })
-        return new Response(JSON.stringify({data: newOrderItem}), {status:201});
+        const pedidos = await prisma.order.findMany({
+            orderBy: { createdAt: 'asc' },
+            include: { items: true }
+        });
+
+        return NextResponse.json(pedidos, { status: 200 });
     } catch (error) {
-        return new Response(JSON.stringify({error: "Error ao criar item"}), {status: 500});
+        console.error('Erro ao buscar pedidos:', error);
+        return NextResponse.json({ message: 'Erro ao buscar pedidos' }, { status: 500 });
     }
 }
+
+
