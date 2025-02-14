@@ -6,14 +6,8 @@ const prisma = new PrismaClient()
 interface OrderItem {
     id: string;
     name: string;
-    price: number | any;
+    price: number;
     quantity: number;
-  }
-  
-  interface OrderData {
-    items: OrderItem[];
-    email: string;
-    name: string;
   }
 
 export async function GET() {
@@ -43,9 +37,9 @@ export async function POST(request: Request) {
                     create: items.map((item: OrderItem) => ({
                         foodId: item.id,
                         name: item.name,
-                        price: parseFloat(item.price),
+                        price: item.price,
                         quantity: item.quantity,
-                        subtotal: parseFloat(item.price) * item.quantity,
+                        subtotal: item.price * item.quantity,
                     }))
                 },
             },

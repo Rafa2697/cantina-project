@@ -1,6 +1,6 @@
 'use client'
 import { useState } from "react";
-import { signIn} from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useForm } from 'react-hook-form';
 import { useRouter } from "next/navigation";
 
@@ -20,12 +20,13 @@ export default function Login() {
             });
             if (result?.error) {
                 setError(result.error);
-            } else{
+            } else {
                 router.refresh()
                 router.push('/dashboard')
             }
         } catch (error) {
-            setError("Ocorreu um erro durante o login.");
+            console.error("Erro na autenticação:", error);
+            return null;
         } finally {
             setLoading(false);
         }

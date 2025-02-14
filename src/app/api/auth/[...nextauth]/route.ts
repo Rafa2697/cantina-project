@@ -5,12 +5,7 @@ import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
-// Defina a interface do usuário
-interface UserResponse {
-  id: string;
-  email: string;
-  name: string;
-}
+
 const handler = NextAuth({
 
   // Configure one or more authentication providers
@@ -31,9 +26,9 @@ const handler = NextAuth({
           type: 'password',
         },
       },
-      async authorize(credentials): Promise<UserResponse | any> {
+      async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          return null; // Retorna null em vez de undefined
+          return null;
         }
         // Aqui você implementa a lógica para verificar as credenciais no seu banco de dados
         const { email, password } = credentials;
@@ -46,13 +41,14 @@ const handler = NextAuth({
         })
 
         if (!user) {
-          throw new Error("Usuário não encontrado");
+          return null;
+          
         }
         // Compara a senha fornecida com a senha criptografada armazenada
         const isValid = password === user.password;
 
         if (!isValid) {
-          throw new Error("Senha inválida");
+          return null;
         }
 
         if (isValid) {
