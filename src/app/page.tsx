@@ -8,7 +8,7 @@ export default function Home(){
                 <Link href="/signIn">
                     Login
                 </Link>
-                <Link href="/pricing">
+                <Link href="/pedidos">
                     Cardapio
                 </Link>
             </div>
