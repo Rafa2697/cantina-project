@@ -15,7 +15,7 @@ const REDIRECT_WHE_NOT_AUTHENTICATED = '/signIn'
 export function middleware(request: NextRequest){
     const path = request.nextUrl.pathname //
     const publicRoute = publicRoutes.find(route => route.path === path)
-    const authToken = request.cookies.get('next-auth.session-token')
+    const authToken = request.cookies.get('__Secure-next-auth.session-token') || request.cookies.get('next-auth.session-token');
     console.log('authToken', authToken)
 
     // If user is not authenticated and is trying to access a public route, allow access
