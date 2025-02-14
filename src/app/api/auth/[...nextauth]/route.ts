@@ -7,6 +7,9 @@ const prisma = new PrismaClient()
 
 
 const handler = NextAuth({
+  session: {
+    strategy: 'jwt'
+  },
 
   // Configure one or more authentication providers
   providers: [
@@ -69,7 +72,27 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET
+  secret: process.env.NEXTAUTH_SECRET,
+  callbacks:{
+    async session({ session, token }) {
+      if (session.user) {
+        session.user = Object.assign(session.user, {
+          id: token.id,
+          email: token.email,
+          name: token.name
+        });
+      }
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.email = user.email;
+        token.name = user.name;
+      }
+      return token;
+    },
+  },
 })
 
 export { handler as GET, handler as POST }
