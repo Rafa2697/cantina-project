@@ -5,7 +5,7 @@ import DashAdministrador from "@/app/components/DashAdministrador"
 import DashClient from "@/app/components/DashCliente"
 
 export default function Page() {
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
   console.log(session)
   if (!session) {
     return <div>Carregando...</div>;
