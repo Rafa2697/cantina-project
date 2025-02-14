@@ -1,11 +1,11 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { getSession } from 'next-auth/react';
-
+import { getSession, Session } from 'next-auth/react';
+import Image from 'next/image';
 
 const Cabecalho: React.FC = () => {
-    const [session, setSession] = useState<any>(null);
+    const [session, setSession] = useState<Session | null>(null);
 
     useEffect(() => {
         const fetchSession = async () => {
@@ -32,7 +32,14 @@ const Cabecalho: React.FC = () => {
                 </div>
             ) : (
                 <div>
-                    <img src={session.user.image} alt="perfil" className='rounded-full w-16 h-16 object-cover' />
+                    <Image 
+                        src={session.user.image}
+                        alt="perfil"
+                        width={64}  // 16 * 4 (w-16)
+                        height={64} // 16 * 4 (h-16)
+                        className='rounded-full object-cover'
+                        priority
+                    />
                     <p>Olá, {session.user?.name}</p>
                     <p>{session?.user?.email}</p>
                 </div>

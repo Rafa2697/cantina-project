@@ -5,6 +5,12 @@ import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
+// Defina a interface do usuário
+interface UserResponse {
+  id: string;
+  email: string;
+  name: string;
+}
 const handler = NextAuth({
 
   // Configure one or more authentication providers
@@ -25,7 +31,7 @@ const handler = NextAuth({
           type: 'password',
         },
       },
-      async authorize(credentials) {
+      async authorize(credentials): Promise<UserResponse | null> {
         if (!credentials?.email || !credentials?.password) {
           return null; // Retorna null em vez de undefined
         }
@@ -57,7 +63,7 @@ const handler = NextAuth({
             email: user.email,
             name: user.name,
             // Add any other required fields to match the User type
-          } as any // Use 'as any' to bypass type checking
+          }
         }
 
       },

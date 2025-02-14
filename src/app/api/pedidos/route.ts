@@ -2,6 +2,19 @@ import { PrismaClient } from "@prisma/client";
 import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient()
+// Interfaces para tipagem
+interface OrderItem {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+  }
+  
+  interface OrderData {
+    items: OrderItem[];
+    email: string;
+    name: string;
+  }
 
 export async function GET() {
     try {
@@ -19,7 +32,7 @@ export async function POST(request: Request) {
         const data = await request.json()
         const { items, email, name } = data;
 
-        const totalPrice = items.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0)
+        const totalPrice = items.reduce((acc: number, item: OrderItem) => acc + item.price * item.quantity, 0)
         const newOrder = await prisma.order.create({
             data: {
                 userName: name,
@@ -27,7 +40,7 @@ export async function POST(request: Request) {
                 status: "PENDING",
                 totalPrice,
                 items: {
-                    create: items.map((item: any) => ({
+                    create: items.map((item: OrderItem) => ({
                         foodId: item.id,
                         name: item.name,
                         price: parseFloat(item.price),
