@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { getSession, Session } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
+import {Session} from 'next-auth'
 import Image from 'next/image';
 
 const Cabecalho: React.FC = () => {

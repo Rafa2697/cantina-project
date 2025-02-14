@@ -31,7 +31,7 @@ const handler = NextAuth({
           type: 'password',
         },
       },
-      async authorize(credentials): Promise<UserResponse | null> {
+      async authorize(credentials): Promise<UserResponse | any> {
         if (!credentials?.email || !credentials?.password) {
           return null; // Retorna null em vez de undefined
         }

@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 interface OrderItem {
     id: string;
     name: string;
-    price: number;
+    price: number | any;
     quantity: number;
   }
   
