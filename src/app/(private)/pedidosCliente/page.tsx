@@ -1,7 +1,8 @@
 'use client'
 import OrdersClient from "@/app/components/OrdersClient"
 import OrdersReceived from "@/app/components/OrdersReceived"
-import { getSession, Session } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
+import { Session } from 'next-auth';
 import React, { useEffect, useState } from 'react';
 
 export default function PedidosCliente() {
