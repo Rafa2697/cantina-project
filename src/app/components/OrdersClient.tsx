@@ -37,25 +37,18 @@ export default function OrdersClient() {
     useEffect(() => {
         fetchData();
     }, []);
-    const emailSessao = session?.user?.email
-    const emailPedido = data.map(item => item.userEmail)
+    const emailSessao = session?.user?.email;
 
-    const isValid = emailPedido.includes(emailSessao || '');
-    console.log(isValid)
-    if(!isValid){
-        return (
-            <div>
-                <p>Você não tem pedidos</p>
-            </div>
-        )
-    }
+    // Filtrar os pedidos com base no email da sessão
+    const filteredData = data.filter(order => order.userEmail === emailSessao);
+  
     return (
         <div>
             {loading ? (
                 <p>carregando...</p>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {data.map((order) => (
+                    {filteredData.map((order) => (
                         <div key={order.id} className="bg-white rounded-lg shadow-md p-4">
                             <p className="text-gray-600 mb-2">Cliente: {order.userName}</p>
                             <p className="text-gray-600 mb-4">Status: {order.status}</p>
