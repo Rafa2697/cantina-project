@@ -38,12 +38,16 @@ export default function OrdersReceived() {
         fetchData();
     }, []);
 
-    const updateStatus = async (orderId:string) => {
+    const updateStatus = async (orderId: string) => {
+        console.log(orderId)
         try {
-            const response = await fetch('/api/pedidos', {
-                method:"PUT",
-                headers:{'Content-Type': "application/json"},
-                body: JSON.stringify({ status: "concluído" })
+            const response = await fetch(`/api/pedidos`, {
+                method: "PUT",
+                headers: { 'Content-Type': "application/json" },
+                body: JSON.stringify({
+                    id: orderId,
+                    status: "Concluído"
+                })
             })
             if (response.ok) {
                 // Atualiza o estado local para refletir a mudança no status
@@ -84,7 +88,16 @@ export default function OrdersReceived() {
                                 <p className="mt-4 text-lg font-bold">
                                     Total: R$ {order.totalPrice}
                                 </p>
-                                <button onClick={() => updateStatus(order.id)}>finalizar pedido</button>
+                                <button
+                                    onClick={() => updateStatus(order.id)}
+                                    className={`px-4 py-2 rounded-md ${order.status === "Concluído"
+                                            ? "bg-gray-300 cursor-not-allowed"
+                                            : "bg-green-500 hover:bg-green-600"
+                                        } text-white`}
+                                    disabled={order.status === "Concluído"}
+                                >
+                                    {order.status === "Concluído" ? "Pedido Finalizado" : "Finalizar Pedido"}
+                                </button>
                             </div>
                         </div>
                     ))}
