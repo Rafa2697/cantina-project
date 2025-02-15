@@ -51,3 +51,38 @@ export async function POST(request: Request) {
         return new Response(JSON.stringify({ error: "Error ao criar pedido" }), { status: 500 })
     }
 }
+
+export async function PUT(request:Request) {
+    try {
+        const data = await request.json()
+        const {id, status} = data
+
+        const updatedOrder = await prisma.order.update({
+            where:{id},
+            data:{
+                status
+            }
+        })
+        return new Response(JSON.stringify({ data: updatedOrder }), { status: 200 });
+    } catch (error) {
+        console.error(error)
+        return new Response(JSON.stringify({error: 'Erro ao atualizar'}), {status: 500})
+    }
+}
+
+export async function DELETE(request:Request) {
+    try {
+        const {id} = await request.json()
+                const pedido = await prisma.order.delete({
+                    where:{
+                        id
+                    }
+                })
+        
+                return NextResponse.json(pedido);
+    } catch (error) {
+        console.error(error)
+       return new Response(JSON.stringify({error:'ERRO ao deletar pedido' }))
+    }
+    
+}
