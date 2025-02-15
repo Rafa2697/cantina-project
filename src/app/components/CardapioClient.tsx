@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {useSession} from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 interface DataItem {
     id: string;
@@ -17,7 +17,7 @@ interface SelectedItem extends DataItem {
 export default function CardapioClient() {
     const [data, setData] = useState<DataItem[]>([]);
     const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
-    const {data: session } = useSession();
+    const { data: session } = useSession();
 
     const fetchData = async () => {
         try {
@@ -29,7 +29,7 @@ export default function CardapioClient() {
         }
     }
 
-    useEffect(() => { 
+    useEffect(() => {
         fetchData();
     }, []);
 
@@ -39,10 +39,10 @@ export default function CardapioClient() {
         setSelectedItems(prev => {
             const existingItem = prev.find(i => i.id === item.id);
             if (existingItem) {
-                return prev.map(i => 
-                    i.id === item.id 
-                    ? { ...i, quantity: i.quantity + 1 }
-                    : i
+                return prev.map(i =>
+                    i.id === item.id
+                        ? { ...i, quantity: i.quantity + 1 }
+                        : i
                 );
             }
             return [...prev, { ...item, quantity: 1 }];
@@ -54,7 +54,7 @@ export default function CardapioClient() {
     };
     console.log(selectedItems, session?.user?.name)
     const handleSubmitOrder = async () => {
-        if(!session?.user?.email){
+        if (!session?.user?.email) {
             alert('Você precisa estar logado para fazer o pedido')
             return;
         }
@@ -64,7 +64,7 @@ export default function CardapioClient() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ 
+                body: JSON.stringify({
                     items: selectedItems,
                     email: session.user.email,
                     name: session.user.name
@@ -83,30 +83,42 @@ export default function CardapioClient() {
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-6">Selecione os itens para pedidos</h1>
-            
+
             {/* Lista de itens selecionados */}
             {selectedItems.length > 0 && (
                 <div className="mb-6 p-4 bg-gray-100 rounded-lg">
                     <h2 className="text-xl font-bold mb-4">Itens Selecionados</h2>
                     <div className="space-y-2">
                         {selectedItems.map(item => (
-                            <div key={item.id} className="flex justify-between items-center">
-                                <span>{item.name} (x{item.quantity})</span>
-                                <button 
+                            <div key={item.id} className="flex justify-between items-center border-b-2 ">
+                                <span>{item.name} (x{item.quantity} )</span>
+                                <span>R${item.price * item.quantity}</span>
+                                <button
                                     onClick={() => handleRemoveItem(item.id)}
-                                    className="text-red-600 hover:text-red-800"
+                                    className="mt-4 bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
                                 >
                                     Remover
                                 </button>
                             </div>
+
                         ))}
                     </div>
-                    <button 
-                        onClick={handleSubmitOrder}
-                        className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-                    >
-                        Enviar Pedido
-                    </button>
+
+                    <div className="flex justify-evenly items-center">
+                        <button
+                            onClick={handleSubmitOrder}
+                            className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                        >
+                            Enviar Pedido
+                        </button>
+                        <div>
+                            {
+                                <div>
+                                    <strong>Total: R${selectedItems.reduce((acc, item) => acc + (item.price * item.quantity), 0)}</strong>
+                                </div>
+                            }
+                        </div>
+                    </div>
                 </div>
             )}
 
@@ -121,15 +133,14 @@ export default function CardapioClient() {
                                 R$ {item.price}
                             </span>
                             <div className="flex items-center space-x-2">
-                                <span className={`px-2 py-1 rounded-full text-sm ${
-                                    item.isAvailable 
-                                    ? 'bg-green-100 text-green-800' 
+                                <span className={`px-2 py-1 rounded-full text-sm ${item.isAvailable
+                                    ? 'bg-green-100 text-green-800'
                                     : 'bg-red-100 text-red-800'
-                                }`}>
+                                    }`}>
                                     {item.isAvailable ? 'Disponível' : 'Indisponível'}
                                 </span>
                                 {item.isAvailable && (
-                                    <button 
+                                    <button
                                         onClick={() => handleAddItem(item)}
                                         className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
                                     >
