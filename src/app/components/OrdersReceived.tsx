@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
 interface DataItem {
@@ -37,6 +37,28 @@ export default function OrdersReceived() {
     useEffect(() => {
         fetchData();
     }, []);
+
+    const updateStatus = async (orderId:string) => {
+        try {
+            const response = await fetch('/api/pedidos', {
+                method:"PUT",
+                headers:{'Content-Type': "application/json"},
+                body: JSON.stringify({ status: "concluído" })
+            })
+            if (response.ok) {
+                // Atualiza o estado local para refletir a mudança no status
+                setData(prevData =>
+                    prevData.map(order =>
+                        order.id === orderId ? { ...order, status: "concluído" } : order
+                    )
+                );
+            } else {
+                console.error("Erro ao atualizar o status do pedido");
+            }
+        } catch (error) {
+            console.error("Erro ao enviar dados: ", error)
+        }
+    }
     return (
         <div>
             {loading ? (
@@ -62,6 +84,7 @@ export default function OrdersReceived() {
                                 <p className="mt-4 text-lg font-bold">
                                     Total: R$ {order.totalPrice}
                                 </p>
+                                <button onClick={() => updateStatus(order.id)}>finalizar pedido</button>
                             </div>
                         </div>
                     ))}
