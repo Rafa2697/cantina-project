@@ -53,7 +53,7 @@ export default function OrdersReceived() {
                 // Atualiza o estado local para refletir a mudança no status
                 setData(prevData =>
                     prevData.map(order =>
-                        order.id === orderId ? { ...order, status: "concluído" } : order
+                        order.id === orderId ? { ...order, status: "Concluído" } : order
                     )
                 );
             } else {

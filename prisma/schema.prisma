@@ -74,7 +74,7 @@ model Order {
   id         String    @id @default(uuid()) // ID único do pedido
   userName   String    // Nome do usuário autenticado pelo Google
   userEmail  String    // Email do usuário autenticado pelo Google
-  status     String    @default("Pendente") // Status do pedido
+  status     String    @default("PENDENTE") // Status do pedido
   totalPrice Decimal   // Preço total do pedido
   createdAt  DateTime  @default(now()) // Data de criação
   updatedAt  DateTime  @updatedAt // Data de atualização
