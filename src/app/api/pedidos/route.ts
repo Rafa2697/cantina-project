@@ -81,7 +81,6 @@ export async function DELETE(request:Request) {
         
                 return NextResponse.json(pedido);
     } catch (error) {
-        console.error(error)
        return new Response(JSON.stringify({error:'ERRO ao deletar pedido' }))
     }
     

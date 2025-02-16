@@ -39,7 +39,6 @@ export default function OrdersReceived() {
     }, []);
 
     const updateStatus = async (orderId: string) => {
-        console.log(orderId)
         try {
             const response = await fetch(`/api/pedidos`, {
                 method: "PUT",
@@ -63,6 +62,25 @@ export default function OrdersReceived() {
             console.error("Erro ao enviar dados: ", error)
         }
     }
+
+    const deletionAllOrders = (orderId: string) => {
+        setTimeout(async () => {
+            try {
+                await fetch("/api/pedidos", {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(orderId)
+                })
+                console.log(orderId)
+                // Atualiza o estado removendo o pedido
+                setData(prevData => prevData.filter(order => order.id !== orderId));
+            } catch (error) {
+                console.error("Erro ao excluir pedido:", error);
+            }
+        }, 2000)
+    }
     return (
         <div>
             {loading ? (
@@ -70,7 +88,9 @@ export default function OrdersReceived() {
                     <p>carregando...</p>
                 </div>
             ) : (
+                
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
                     {data.map((order) => (
                         <div key={order.id} className="bg-white rounded-lg shadow-md p-4">
                             <p className="text-gray-600 mb-2">Cliente:{order.userName}</p>
@@ -91,8 +111,8 @@ export default function OrdersReceived() {
                                 <button
                                     onClick={() => updateStatus(order.id)}
                                     className={`px-4 py-2 rounded-md ${order.status === "Concluído"
-                                            ? "bg-gray-300 cursor-not-allowed"
-                                            : "bg-green-500 hover:bg-green-600"
+                                        ? "bg-gray-300 cursor-not-allowed"
+                                        : "bg-green-500 hover:bg-green-600"
                                         } text-white`}
                                     disabled={order.status === "Concluído"}
                                 >
@@ -101,7 +121,7 @@ export default function OrdersReceived() {
                             </div>
                         </div>
                     ))}
-
+                    
                 </div>
             )}
         </div>
