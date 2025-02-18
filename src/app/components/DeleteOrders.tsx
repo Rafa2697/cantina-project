@@ -1,8 +1,8 @@
 
 
-export default  function DeleteOrders(){
+export default function DeleteOrders({ onDeleteCompleted }: {onDeleteCompleted: () => void}) {
 
-    async function deletarPedidos(){
+    async function deletarPedidos() {
         try {
             await fetch("/api/pedidos", {
                 method: "DELETE",
@@ -10,13 +10,15 @@ export default  function DeleteOrders(){
                     "Content-Type": "application/json"
                 },
             })
+            // Chama o callback para atualizar os pedidos na tela
+            onDeleteCompleted(); // Notifica o pai para atualizar os pedidos
         } catch (error) {
             console.error("Erro ao excluir pedido:", error);
         }
     }
-    return(
+    return (
         <button
-            onClick={() => deletarPedidos()}
+            onClick={deletarPedidos}
         >
             Deletar pedidos concluídos
         </button>

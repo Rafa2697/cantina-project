@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 
 export default function PedidosCliente() {
     const [session, setSession] = useState<Session | null>(null);
+
     useEffect(() => {
         const fetchSession = async () => {
             const sessionData = await getSession();
@@ -17,14 +18,20 @@ export default function PedidosCliente() {
         fetchSession();
     }, []);
 
+        const [refreshOrders, setRefreshOrders] = useState(false);
+      
+        const handleDeleteOrders = () => {
+          setRefreshOrders((prev) => !prev); // Alterna o estado para forçar a atualização
+        };
+
     if (!session) {
         return <div>Carregando...</div>;
     }
     return (
         <div>
-            <DeleteOrders/>
+            <DeleteOrders onDeleteCompleted={handleDeleteOrders} /> 
             {!session.user?.image ? (
-                <OrdersReceived />
+                <OrdersReceived refreshTrigger={refreshOrders}/>
             ) : (
                 <OrdersClient />
             )}

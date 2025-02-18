@@ -19,14 +19,14 @@ interface DataItem {
     ];
 }
 
-export default function OrdersReceived() {
+export default function OrdersReceived({ refreshTrigger }: {refreshTrigger: boolean}) {
     const [data, setData] = useState<DataItem[]>([]);
     const [loading, setLoading] = useState(false)
 
     const fetchData = async () => {
         setLoading(true)
         try {
-            const response = await fetch("/api/items"); // Atualize o endpoint conforme necessário
+            const response = await fetch("/api/items");
             const result: DataItem[] = await response.json();
             setData(result);
         } catch (error) {
@@ -36,7 +36,7 @@ export default function OrdersReceived() {
     }
     useEffect(() => {
         fetchData();
-    }, []);
+    },  [refreshTrigger]);
 
     const updateStatus = async (orderId: string) => {
         try {

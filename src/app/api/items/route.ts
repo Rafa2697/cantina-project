@@ -11,7 +11,6 @@ export async function GET() {
 
         return NextResponse.json(pedidos, { status: 200 });
     } catch (error) {
-        console.error('Erro ao buscar pedidos:', error);
         return NextResponse.json({ message: 'Erro ao buscar pedidos' }, { status: 500 });
     }
 }
