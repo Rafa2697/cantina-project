@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import DeleteOrders from "./DeleteOrders";
 
 interface DataItem {
     id: string;
