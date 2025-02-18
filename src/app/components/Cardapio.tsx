@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import Link from "next/link"
 interface DataItem {
     id: string;
     name: string;
@@ -8,6 +8,7 @@ interface DataItem {
     categoryId: string;
     isAvailable: boolean;
 }
+import {ArrowLeftToLine } from "lucide-react";
 
 export default function Cardapio() {
     const [data, setData] = useState<DataItem[]>([]);
@@ -32,6 +33,9 @@ export default function Cardapio() {
 
     return (
         <div className="container mx-auto p-4">
+            <Link href="/">
+            <ArrowLeftToLine className="hover:text-red-600" />
+                </Link>
             <h1 className="text-2xl font-bold mb-6 text-center">Cardápio</h1>
             {loading ? (
                 <p>carregando...</p>
@@ -43,11 +47,11 @@ export default function Cardapio() {
                             <p className="text-gray-600 mt-2">{item.description}</p>
                             <div className="mt-4 flex justify-between items-center">
                                 <span className="text-lg font-bold">
-                                    R$ {item.price}
+                                R$ {Number(item.price).toFixed(2).replace('.', ',')}
                                 </span>
                                 <span className={`px-2 py-1 rounded-full text-sm ${item.isAvailable
-                                        ? 'bg-green-100 text-green-800'
-                                        : 'bg-red-100 text-red-800'
+                                    ? 'bg-green-100 text-green-800'
+                                    : 'bg-red-100 text-red-800'
                                     }`}>
                                     {item.isAvailable ? 'Disponível' : 'Indisponível'}
                                 </span>

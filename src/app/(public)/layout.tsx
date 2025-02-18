@@ -26,7 +26,7 @@ export default function PublicLayout({
     return (
         <html lang="pt-br">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${geistSans.variable} ${geistMono.variable} antialiased bg-indigo-300`}
             >
                 <Providers>
                     {children}
