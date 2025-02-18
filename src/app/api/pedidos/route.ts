@@ -70,16 +70,15 @@ export async function PUT(request:Request) {
     }
 }
 
-export async function DELETE(request:Request) {
+export async function DELETE() {
     try {
-        const {id} = await request.json()
-                const pedido = await prisma.order.delete({
+                const pedidos = await prisma.order.deleteMany({
                     where:{
-                        id
+                        status:"Concluído"
                     }
                 })
         
-                return NextResponse.json(pedido);
+                return NextResponse.json(pedidos);
     } catch (error) {
        return new Response(JSON.stringify({error:'ERRO ao deletar pedido' }))
     }
