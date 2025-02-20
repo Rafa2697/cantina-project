@@ -31,7 +31,7 @@ export default function PedidosCliente() {
         <div >
             
             {!session.user?.image ? (
-                <div>
+                <div className="flex flex-col items-center">
                     <DeleteOrders onDeleteCompleted={handleDeleteOrders} />
                     <OrdersReceived refreshTrigger={refreshOrders}/>
                 </div>

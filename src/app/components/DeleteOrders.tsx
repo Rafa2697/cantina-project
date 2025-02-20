@@ -19,7 +19,7 @@ export default function DeleteOrders({ onDeleteCompleted }: {onDeleteCompleted: 
     return (
         <button
             onClick={deletarPedidos}
-        >
+            className={`px-4 py-2 rounded-md bg-red-500 m-2 text-center text-white`}>
             Deletar pedidos concluídos
         </button>
     )

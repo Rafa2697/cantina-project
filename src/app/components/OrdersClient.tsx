@@ -57,13 +57,13 @@ export default function OrdersClient() {
                                     <div key={item.id} className="border-b pb-2">
                                         <p className="font-medium">{item.name}</p>
                                         <p className="text-sm text-gray-500">
-                                            Quantidade: {item.quantity} | Subtotal: R$ {item.subtotal}
+                                            Quantidade: {item.quantity} | Subtotal: R$ {(Number(item.subtotal).toFixed(2).replace('.', ','))}
                                         </p>
                                     </div>
                                 ))}
                             </div>
                             <p className="mt-4 text-lg font-bold">
-                                Total: R$ {order.totalPrice}
+                                Total: R$ {(Number(order.totalPrice).toFixed(2).replace('.', ','))}
                             </p>
                         </div>
                     ))}

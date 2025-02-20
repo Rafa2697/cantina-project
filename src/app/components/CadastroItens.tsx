@@ -257,7 +257,7 @@ export default function CadastroItens() {
                             >
                                 <div>
                                     <p className="text-sm md:text-lg font-medium">{item.name}</p>
-                                    <p className="text-sm text-gray-500">{(Number(item.price).toFixed(2).replace('.', ','))}</p>
+                                    <p className="text-sm text-gray-500">R$ {(Number(item.price).toFixed(2).replace('.', ','))}</p>
                                     <p className="text-xs md:text-sm text-gray-500">{item.description}</p>
                                     <p className="text-sm text-gray-500">{getCategoryName(item.categoryId)}</p>
                                     <p className={`text-sm ${item.isAvailable ? "text-green-600" : "text-red-600"}`}>
