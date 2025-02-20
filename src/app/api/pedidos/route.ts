@@ -17,7 +17,7 @@ export async function GET() {
         return NextResponse.json(pedidos, { status: 200 });
     } catch (error) {
         console.error('Erro ao buscar pedidos:', error);
-        return NextResponse.json({ message: 'Erro ao buscar pedidos' }, { status: 500 });
+        
     }
 }
 
@@ -66,22 +66,21 @@ export async function PUT(request:Request) {
         return new Response(JSON.stringify({ data: updatedOrder }), { status: 200 });
     } catch (error) {
         
-        return new Response(JSON.stringify({error: 'Erro ao atualizar'}), {status: 500})
+        console.error(error)
     }
 }
 
-export async function DELETE(request:Request) {
+export async function DELETE() {
     try {
-        const {id} = await request.json()
-                const pedido = await prisma.order.delete({
+                const pedidos = await prisma.order.deleteMany({
                     where:{
-                        id
+                        status:"Concluído"
                     }
                 })
         
-                return NextResponse.json(pedido);
+                return NextResponse.json(pedidos);
     } catch (error) {
-       return new Response(JSON.stringify({error:'ERRO ao deletar pedido' }))
+        console.error(error)
     }
     
 }

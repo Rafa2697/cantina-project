@@ -28,7 +28,6 @@ const Cabecalho: React.FC = () => {
 
             {!session.user?.image ? (
                 <div>
-                    <p>Administrador</p>
                     <p>Olá, {session.user?.name}</p>
                 </div>
             ) : (

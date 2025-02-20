@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-
 interface DataItem {
     id: string;
     userName: string;
@@ -19,14 +18,14 @@ interface DataItem {
     ];
 }
 
-export default function OrdersReceived() {
+export default function OrdersReceived({ refreshTrigger }: {refreshTrigger: boolean}) {
     const [data, setData] = useState<DataItem[]>([]);
     const [loading, setLoading] = useState(false)
 
     const fetchData = async () => {
         setLoading(true)
         try {
-            const response = await fetch("/api/items"); // Atualize o endpoint conforme necessário
+            const response = await fetch("/api/items");
             const result: DataItem[] = await response.json();
             setData(result);
         } catch (error) {
@@ -36,7 +35,7 @@ export default function OrdersReceived() {
     }
     useEffect(() => {
         fetchData();
-    }, []);
+    },  [refreshTrigger]);
 
     const updateStatus = async (orderId: string) => {
         try {
@@ -63,24 +62,8 @@ export default function OrdersReceived() {
         }
     }
 
-    const deletionAllOrders = (orderId: string) => {
-        setTimeout(async () => {
-            try {
-                await fetch("/api/pedidos", {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(orderId)
-                })
-                console.log(orderId)
-                // Atualiza o estado removendo o pedido
-                setData(prevData => prevData.filter(order => order.id !== orderId));
-            } catch (error) {
-                console.error("Erro ao excluir pedido:", error);
-            }
-        }, 2000)
-    }
+    
+
     return (
         <div>
             {loading ? (
@@ -88,9 +71,9 @@ export default function OrdersReceived() {
                     <p>carregando...</p>
                 </div>
             ) : (
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    
+
                     {data.map((order) => (
                         <div key={order.id} className="bg-white rounded-lg shadow-md p-4">
                             <p className="text-gray-600 mb-2">Cliente:{order.userName}</p>
@@ -121,7 +104,7 @@ export default function OrdersReceived() {
                             </div>
                         </div>
                     ))}
-                    
+
                 </div>
             )}
         </div>

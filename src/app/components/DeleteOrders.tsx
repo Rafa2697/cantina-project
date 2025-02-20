@@ -1,0 +1,26 @@
+
+
+export default function DeleteOrders({ onDeleteCompleted }: {onDeleteCompleted: () => void}) {
+
+    async function deletarPedidos() {
+        try {
+            await fetch("/api/pedidos", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            })
+            // Chama o callback para atualizar os pedidos na tela
+            onDeleteCompleted(); // Notifica o pai para atualizar os pedidos
+        } catch (error) {
+            console.error("Erro ao excluir pedido:", error);
+        }
+    }
+    return (
+        <button
+            onClick={deletarPedidos}
+        >
+            Deletar pedidos concluídos
+        </button>
+    )
+}
