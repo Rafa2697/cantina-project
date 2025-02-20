@@ -28,10 +28,13 @@ export default function PedidosCliente() {
         return <div>Carregando...</div>;
     }
     return (
-        <div>
-            <DeleteOrders onDeleteCompleted={handleDeleteOrders} /> 
+        <div >
+            
             {!session.user?.image ? (
-                <OrdersReceived refreshTrigger={refreshOrders}/>
+                <div>
+                    <DeleteOrders onDeleteCompleted={handleDeleteOrders} />
+                    <OrdersReceived refreshTrigger={refreshOrders}/>
+                </div>
             ) : (
                 <OrdersClient />
             )}

@@ -34,9 +34,9 @@ export default function Login() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center">
+        <div className=" flex items-center justify-center">
             <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
-                <h1 className="text-2xl font-bold mb-4 text-center text-slate-500">Login</h1>
+                <h1 className="text-2xl font-bold mb-4 text-center text-slate-500">Login Administrativo</h1>
                 {error && (
                     <p className="text-red-500 text-sm mb-4 text-center">{error}</p>
                 )}

@@ -77,9 +77,9 @@ export default function CadastroItens() {
                     id: editingId
                 };
 
-                await fetch('/api/cadastrarAlimento',{
-                    method:"PUT",
-                    headers:{"Content-Type": "application/json"},
+                await fetch('/api/cadastrarAlimento', {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(updateData)
                 });
             } else {
@@ -143,8 +143,8 @@ export default function CadastroItens() {
     }
 
     return (
-        <div className="container mx-auto p-4 flex gap-3">
-            <div className="w-1/2">
+        <div className="container mx-auto p-4 flex flex-col sm:flex-row gap-3">
+            <div className="w-full sm:w-1/2">
                 <h1 className="text-2xl font-bold mb-6 text-center">Cadastrar Itens</h1>
 
                 <form onSubmit={handleSubmit} className="  bg-white p-3 rounded-lg shadow-md border border-gray-300">
@@ -247,18 +247,18 @@ export default function CadastroItens() {
             {loading ? (
                 <p>Carregando...</p>
             ) : (
-                <div className="w-1/2">
+                <div className="w-full sm:w-1/2">
                     <h1 className="text-2xl font-bold mb-6 text-center">Itens já cadastrados</h1>
                     <ul className="space-y-4  overflow-y-scroll h-auto">
                         {data.map((item) => (
                             <li
                                 key={item.id}
-                                className="flex items-center justify-between p-4 border border-teal-950 rounded-md"
+                                className="flex flex-col md:flex-row items-center justify-between p-4 border border-teal-950 rounded-md"
                             >
                                 <div>
-                                    <p className="text-lg font-medium">{item.name}</p>
-                                    <p className="text-sm text-gray-500">{item.price}</p>
-                                    <p className="text-sm text-gray-500">{item.description}</p>
+                                    <p className="text-sm md:text-lg font-medium">{item.name}</p>
+                                    <p className="text-sm text-gray-500">{(Number(item.price).toFixed(2).replace('.', ','))}</p>
+                                    <p className="text-xs md:text-sm text-gray-500">{item.description}</p>
                                     <p className="text-sm text-gray-500">{getCategoryName(item.categoryId)}</p>
                                     <p className={`text-sm ${item.isAvailable ? "text-green-600" : "text-red-600"}`}>
                                         {item.isAvailable ? "Ativo" : "Inativo"}

@@ -47,9 +47,9 @@ export default function OrdersClient() {
             {loading ? (
                 <p>carregando...</p>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-2">
                     {filteredData.map((order) => (
-                        <div key={order.id} className="bg-white rounded-lg shadow-md p-4">
+                        <div key={order.id} className="bg-slate-100 rounded-lg shadow-lg p-4">
                             <p className="text-gray-600 mb-2">Cliente: {order.userName}</p>
                             <p className="text-gray-600 mb-4">Status: {order.status}</p>
                             <div className="space-y-2">

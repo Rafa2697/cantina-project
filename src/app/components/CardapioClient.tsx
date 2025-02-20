@@ -87,12 +87,12 @@ export default function CardapioClient() {
             {/* Lista de itens selecionados */}
             {selectedItems.length > 0 && (
                 <div className="mb-6 p-4 bg-gray-100 rounded-lg">
-                    <h2 className="text-xl font-bold mb-4">Itens Selecionados</h2>
-                    <div className="space-y-2">
+                    <h2 className="text-xl font-bold mb-4 text-center">Itens Selecionados</h2>
+                    <div className="space-y-4">
                         {selectedItems.map(item => (
-                            <div key={item.id} className="flex justify-between items-center border-b-2 ">
-                                <span>{item.name} (x{item.quantity} )</span>
-                                <span>R${item.price * item.quantity}</span>
+                            <div key={item.id} className="flex flex-wrap justify-center sm:justify-between items-center border-b-2 pb-2 gap-2 text-sm sm:text-base">
+                                <span className="w-full sm:w-auto text-center sm:text-start">{item.name} (x{item.quantity} )</span>
+                                <span className="w-full sm:w-auto font-semibold text-center sm:text-start">R${(item.price * item.quantity).toFixed(2).replace('.', ',')}</span>
                                 <button
                                     onClick={() => handleRemoveItem(item.id)}
                                     className="mt-4 bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
@@ -104,17 +104,17 @@ export default function CardapioClient() {
                         ))}
                     </div>
 
-                    <div className="flex justify-evenly items-center">
+                    <div className="flex flex-col sm:flex-row justify-evenly items-center mt-4 gap-3">
                         <button
                             onClick={handleSubmitOrder}
-                            className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full sm:w-auto"
                         >
                             Enviar Pedido
                         </button>
                         <div>
                             {
                                 <div>
-                                    <strong>Total: R${selectedItems.reduce((acc, item) => acc + (item.price * item.quantity), 0)}</strong>
+                                    <strong>Total: R${(selectedItems.reduce((acc, item) => acc + (item.price * item.quantity), 0).toFixed(2).replace('.', ','))}</strong>
                                 </div>
                             }
                         </div>
@@ -127,10 +127,10 @@ export default function CardapioClient() {
                 {data.map((item) => (
                     <div key={item.id} className="bg-white rounded-lg shadow-md p-4">
                         <h2 className="text-xl font-semibold">{item.name}</h2>
-                        <p className="text-gray-600 mt-2">{item.description}</p>
+                        <p className="text-gray-600 mt-2 text-xs sm:text-lg">{item.description}</p>
                         <div className="mt-4 flex justify-between items-center">
-                            <span className="text-lg font-bold">
-                                R$ {item.price}
+                            <span className="text-xs sm:text-lg font-bold">
+                                R$ {(Number(item.price).toFixed(2).replace('.', ','))}
                             </span>
                             <div className="flex items-center space-x-2">
                                 <span className={`px-2 py-1 rounded-full text-sm ${item.isAvailable

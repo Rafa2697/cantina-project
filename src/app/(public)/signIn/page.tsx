@@ -7,9 +7,9 @@ export default function Home() {
   
 
   return (
-    <main className=" h-auto flex gap-16 items-center justify-center">
+    <div className=" h-screen flex flex-col-reverse sm:flex-row gap-5 items-center justify-center">
       <LoginCredentials/>
       <LoginBtn />
-    </main>
+    </div>
   )
 }

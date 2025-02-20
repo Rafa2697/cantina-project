@@ -76,20 +76,20 @@ export default function OrdersReceived({ refreshTrigger }: {refreshTrigger: bool
 
                     {data.map((order) => (
                         <div key={order.id} className="bg-white rounded-lg shadow-md p-4">
-                            <p className="text-gray-600 mb-2">Cliente:{order.userName}</p>
-                            <p className="text-gray-600 mb-4">Identificação:{order.userEmail}</p>
-                            <p className="text-gray-600 mb-4">status:{order.status}</p>
+                            <p className="text-gray-600 mb-2 text-sm">Cliente:{order.userName}</p>
+                            <p className="text-gray-600 mb-4 text-xs">Identificação:{order.userEmail}</p>
+                            <p className="text-gray-600 mb-4 text-sm">status:{order.status}</p>
                             <div className="space-y-2">
                                 {order.items.map((item) => (
                                     <div key={item.id} className="border-b pb-2">
                                         <p className="font-medium">{item.name}</p>
                                         <p className="text-sm text-gray-500">
-                                            Quantidade: {item.quantity} | Subtotal: R$ {item.subtotal}
+                                            Quantidade: {item.quantity} | Subtotal: R$ {(Number(item.subtotal).toFixed(2).replace(".", ","))}
                                         </p>
                                     </div>
                                 ))}
                                 <p className="mt-4 text-lg font-bold">
-                                    Total: R$ {order.totalPrice}
+                                    Total: R$ {(Number(order.totalPrice).toFixed(2).replace(".", ","))}
                                 </p>
                                 <button
                                     onClick={() => updateStatus(order.id)}
