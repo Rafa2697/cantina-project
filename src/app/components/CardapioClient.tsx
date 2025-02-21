@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import { toast } from "sonner"
 
 interface DataItem {
     id: string;
@@ -71,7 +72,7 @@ export default function CardapioClient() {
                 }),
             });
             if (response.ok) {
-                alert('Pedido enviado com sucesso!');
+                toast('Pedido enviado com sucesso! Verfique em Pedidos.');
                 setSelectedItems([]);
             }
         } catch (error) {
