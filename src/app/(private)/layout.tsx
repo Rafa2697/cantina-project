@@ -27,7 +27,7 @@ export default function PrivateLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="pt-br">
+        
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
@@ -43,6 +43,6 @@ export default function PrivateLayout({
                 </SidebarProvider>
 
             </body>
-        </html>
+        
     );
 }

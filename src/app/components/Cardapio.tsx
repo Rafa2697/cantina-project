@@ -9,7 +9,7 @@ interface DataItem {
     categoryId: string;
     isAvailable: boolean;
 }
-import {ArrowLeftToLine } from "lucide-react";
+import { ArrowLeftToLine, LogIn } from "lucide-react";
 
 export default function Cardapio() {
     const [data, setData] = useState<DataItem[]>([]);
@@ -34,9 +34,14 @@ export default function Cardapio() {
 
     return (
         <div className="container mx-auto p-4">
-            <Link href="/">
-            <ArrowLeftToLine className="hover:text-red-600" />
+            <div className="flex justify-between items-center mb-4">
+                <Link href="/">
+                    <ArrowLeftToLine className="hover:text-red-600" />
                 </Link>
+                <Link href="/dashboard">
+                    <LogIn className="hover:text-green-500" />
+                </Link>
+            </div>
             <h1 className="text-2xl font-bold mb-6 text-center">Cardápio</h1>
             {loading ? (
                 <p>carregando...</p>
@@ -49,7 +54,7 @@ export default function Cardapio() {
                             <div className="mt-4 flex justify-between items-center">
                                 <div className="flex flex-col sm:flex-row gap-2">
                                     <span className="text-lg font-bold">
-                                    R$ {Number(item.price).toFixed(2).replace('.', ',')}
+                                        R$ {Number(item.price).toFixed(2).replace('.', ',')}
                                     </span>
                                     <span className={`px-2 py-1 rounded-full text-sm ${item.isAvailable
                                         ? 'bg-green-100 text-green-800'
@@ -61,11 +66,11 @@ export default function Cardapio() {
                                 {item.imagemURL ? (<img src={item.imagemURL} alt={item.name} className="w-24 mt-4 rounded-sm " />) : (
                                     <div></div>
                                 )}
-                                
+
                             </div>
-                           
-                                
-                           
+
+
+
                         </div>
                     ))}
                 </div>

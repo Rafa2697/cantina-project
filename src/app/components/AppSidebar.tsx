@@ -29,6 +29,11 @@ const items = [
         icon: ShoppingBag,
     },
     {
+        title: "Cardápio",
+        url: "/pedidos",
+        icon: ShoppingBag,
+    },
+    {
         title: "Sair",
         url: "#", // Mantenha como "#" ou remova o URL
         icon: LogOut,
