@@ -5,6 +5,7 @@ interface DataItem {
     name: string;
     description: string;
     price: number;
+    imagemURL: string;
     categoryId: string;
     isAvailable: boolean;
 }
@@ -46,16 +47,25 @@ export default function Cardapio() {
                             <h2 className="text-xl font-semibold">{item.name}</h2>
                             <p className="text-gray-600 mt-2">{item.description}</p>
                             <div className="mt-4 flex justify-between items-center">
-                                <span className="text-lg font-bold">
-                                R$ {Number(item.price).toFixed(2).replace('.', ',')}
-                                </span>
-                                <span className={`px-2 py-1 rounded-full text-sm ${item.isAvailable
-                                    ? 'bg-green-100 text-green-800'
-                                    : 'bg-red-100 text-red-800'
-                                    }`}>
-                                    {item.isAvailable ? 'Disponível' : 'Indisponível'}
-                                </span>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <span className="text-lg font-bold">
+                                    R$ {Number(item.price).toFixed(2).replace('.', ',')}
+                                    </span>
+                                    <span className={`px-2 py-1 rounded-full text-sm ${item.isAvailable
+                                        ? 'bg-green-100 text-green-800'
+                                        : 'bg-red-100 text-red-800'
+                                        }`}>
+                                        {item.isAvailable ? 'Disponível' : 'Indisponível'}
+                                    </span>
+                                </div>
+                                {item.imagemURL ? (<img src={item.imagemURL} alt={item.name} className="w-24 mt-4 rounded-sm " />) : (
+                                    <div></div>
+                                )}
+                                
                             </div>
+                           
+                                
+                           
                         </div>
                     ))}
                 </div>
