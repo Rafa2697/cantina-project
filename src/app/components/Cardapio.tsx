@@ -11,6 +11,7 @@ interface DataItem {
 }
 import { ArrowLeftToLine, LogIn } from "lucide-react";
 import Image from "next/image";
+
 export default function Cardapio() {
     const [data, setData] = useState<DataItem[]>([]);
     const [loading, setLoading] = useState(false)
@@ -63,7 +64,7 @@ export default function Cardapio() {
                                         {item.isAvailable ? 'Disponível' : 'Indisponível'}
                                     </span>
                                 </div>
-                                {item.imagemURL ? (<Image src={item.imagemURL} alt={item.name} className="w-24 mt-4 rounded-sm " />) : (
+                                {item.imagemURL ? (<Image src={item.imagemURL} alt={item.name} width={96} height={96} className="w-24 mt-4 rounded-sm " />) : (
                                     <div></div>
                                 )}
 
