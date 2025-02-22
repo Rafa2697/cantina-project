@@ -10,8 +10,8 @@ export default {
   theme: {
   	extend: {
 		backgroundImage: {
-			'fundo-mobile': "url('/fundoMobile.png')",
-			'fundo-desktop': "url('/fundoDesktop.png')",
+			'fundo-mobile': "url('/fundoMobile.svg')",
+			'fundo-desktop': "url('/fundoDesktop.svg')",
 		  },
   		colors: {
   			background: 'hsl(var(--background))',
