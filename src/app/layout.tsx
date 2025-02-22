@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cantina UNISEPE",
-  description: "Aplicativo de pedidos para a Cantina do UNISEPE",
+  title: "Cantina FASUPI",
+  description: "Aplicativo de pedidos para a Cantina do FASUPI",
 };
 
 export default function RootLayout({
@@ -25,9 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br">
+    <html lang="pt-br ">
 
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased container mx-auto`}>
         <Providers>
           {children}
         </Providers>

@@ -24,14 +24,14 @@ export default function PublicLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="pt-br">
+       
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased bg-indigo-300`}
+                className={`${geistSans.variable} ${geistMono.variable} antialiased bg-orange-300 text-black dark:bg-black dark:text-white `}
             >
                 <Providers>
                     {children}
                 </Providers>
             </body>
-        </html>
+        
     );
 }
