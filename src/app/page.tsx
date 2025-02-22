@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { LogIn } from 'lucide-react';
-import bgImage from './assets/fundoDesktop.png'
 export default function Home() {
     
     return (
