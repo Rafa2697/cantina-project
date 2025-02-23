@@ -18,22 +18,22 @@ export default function PedidosCliente() {
         fetchSession();
     }, []);
 
-        const [refreshOrders, setRefreshOrders] = useState(false);
-      
-        const handleDeleteOrders = () => {
-          setRefreshOrders((prev) => !prev); // Alterna o estado para forçar a atualização
-        };
+    const [refreshOrders, setRefreshOrders] = useState(false);
+
+    const handleDeleteOrders = () => {
+        setRefreshOrders((prev) => !prev); // Alterna o estado para forçar a atualização
+    };
 
     if (!session) {
-        return <div>Carregando...</div>;
+        return <div></div>
     }
     return (
         <div >
-            
+
             {!session.user?.image ? (
                 <div className="flex flex-col items-center">
                     <DeleteOrders onDeleteCompleted={handleDeleteOrders} />
-                    <OrdersReceived refreshTrigger={refreshOrders}/>
+                    <OrdersReceived refreshTrigger={refreshOrders} />
                 </div>
             ) : (
                 <OrdersClient />

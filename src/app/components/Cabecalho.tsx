@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import { getSession } from 'next-auth/react';
-import {Session} from 'next-auth'
+import { Session } from 'next-auth'
 import Image from 'next/image';
+import { Skeleton } from "@/components/ui/skeleton"
 
 const Cabecalho: React.FC = () => {
     const [session, setSession] = useState<Session | null>(null);
@@ -19,7 +20,16 @@ const Cabecalho: React.FC = () => {
 
     console.log(session?.user?.image)
     if (!session) {
-        return <div>Carregando...</div>;
+        return (
+            <div className="flex flex-col items-center space-y-2 px-4 py-2 text-black">
+                <Skeleton className="h-12 w-12 rounded-full" />
+                <div className="space-y-2">
+                    <Skeleton className="h-4 w-52" />
+                    <Skeleton className="h-4 w-[200px]" />
+                </div>
+            </div>
+        )
+
     }
 
 
@@ -32,7 +42,7 @@ const Cabecalho: React.FC = () => {
                 </div>
             ) : (
                 <div>
-                    <Image 
+                    <Image
                         src={session.user.image}
                         alt="perfil"
                         width={64}  // 16 * 4 (w-16)

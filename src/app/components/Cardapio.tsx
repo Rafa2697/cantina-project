@@ -11,6 +11,8 @@ interface DataItem {
 }
 import { ArrowLeftToLine, LogIn } from "lucide-react";
 import Image from "next/image";
+import { Skeleton } from "@/components/ui/skeleton"
+
 
 export default function Cardapio() {
     const [data, setData] = useState<DataItem[]>([]);
@@ -45,7 +47,18 @@ export default function Cardapio() {
             </div>
             <h1 className="text-2xl font-bold mb-6 text-center">Cardápio</h1>
             {loading ? (
-                <p>carregando...</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-auto w-full place-items-center justify-center">
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                </div>
+
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {data.map((item) => (

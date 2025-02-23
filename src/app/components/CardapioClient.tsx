@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner"
-
+import { Skeleton } from "@/components/ui/skeleton"
 interface DataItem {
     id: string;
     name: string;
@@ -53,7 +53,6 @@ export default function CardapioClient() {
     const handleRemoveItem = (itemId: string) => {
         setSelectedItems(prev => prev.filter(item => item.id !== itemId));
     };
-    console.log(selectedItems, session?.user?.name)
     const handleSubmitOrder = async () => {
         if (!session?.user?.email) {
             alert('Você precisa estar logado para fazer o pedido')
@@ -124,35 +123,50 @@ export default function CardapioClient() {
             )}
 
             {/* Grid de items do cardápio */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {data.map((item) => (
-                    <div key={item.id} className="bg-white rounded-lg shadow-md p-4">
-                        <h2 className="text-xl font-semibold">{item.name}</h2>
-                        <p className="text-gray-600 mt-2 text-xs sm:text-lg">{item.description}</p>
-                        <div className="mt-4 flex justify-between items-center">
-                            <span className="text-xs sm:text-lg font-bold">
-                                R$ {(Number(item.price).toFixed(2).replace('.', ','))}
-                            </span>
-                            <div className="flex items-center space-x-2">
-                                <span className={`px-2 py-1 rounded-full text-sm ${item.isAvailable
-                                    ? 'bg-green-100 text-green-800'
-                                    : 'bg-red-100 text-red-800'
-                                    }`}>
-                                    {item.isAvailable ? 'Disponível' : 'Indisponível'}
+            {data.length === 0 ? (
+                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-auto w-full place-items-center justify-center">
+                   <Skeleton className="w-60 h-52 rounded-sm" />
+                   <Skeleton className="w-60 h-52 rounded-sm" />
+                   <Skeleton className="w-60 h-52 rounded-sm" />
+                   <Skeleton className="w-60 h-52 rounded-sm" />
+                   <Skeleton className="w-60 h-52 rounded-sm" />
+                   <Skeleton className="w-60 h-52 rounded-sm" />
+                   <Skeleton className="w-60 h-52 rounded-sm" />
+                   <Skeleton className="w-60 h-52 rounded-sm" />
+                   <Skeleton className="w-60 h-52 rounded-sm" />
+               </div>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {data.map((item) => (
+                        <div key={item.id} className="bg-white rounded-lg shadow-md p-4">
+                            <h2 className="text-xl font-semibold">{item.name}</h2>
+                            <p className="text-gray-600 mt-2 text-xs sm:text-lg">{item.description}</p>
+                            <div className="mt-4 flex justify-between items-center">
+                                <span className="text-xs sm:text-lg font-bold">
+                                    R$ {(Number(item.price).toFixed(2).replace('.', ','))}
                                 </span>
-                                {item.isAvailable && (
-                                    <button
-                                        onClick={() => handleAddItem(item)}
-                                        className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-                                    >
-                                        Adicionar
-                                    </button>
-                                )}
+                                <div className="flex items-center space-x-2">
+                                    <span className={`px-2 py-1 rounded-full text-sm ${item.isAvailable
+                                        ? 'bg-green-100 text-green-800'
+                                        : 'bg-red-100 text-red-800'
+                                        }`}>
+                                        {item.isAvailable ? 'Disponível' : 'Indisponível'}
+                                    </span>
+                                    {item.isAvailable && (
+                                        <button
+                                            onClick={() => handleAddItem(item)}
+                                            className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                                        >
+                                            Adicionar
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            )}
+
         </div>
     );
 }

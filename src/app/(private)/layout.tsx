@@ -28,7 +28,7 @@ export default function PrivateLayout({
 }>) {
     return (
         
-            <body
+            <div
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
                 <SidebarProvider>
@@ -42,7 +42,7 @@ export default function PrivateLayout({
                     </Providers>
                 </SidebarProvider>
 
-            </body>
+            </div>
         
     );
 }
