@@ -13,10 +13,10 @@ import {
 
 import { signOut } from "next-auth/react"
 import Cabecalho from "./Cabecalho";
-import { Home, ShoppingBag, LogOut } from "lucide-react";
+import { Home, ShoppingBag, LogOut, SquareMenu } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-// Menu items.
+// Menu items.<SquareMenu />
 const items = [
     {
         title: "Home",
@@ -31,7 +31,7 @@ const items = [
     {
         title: "Cardápio",
         url: "/pedidos",
-        icon: ShoppingBag,
+        icon: SquareMenu,
     },
     {
         title: "Sair",

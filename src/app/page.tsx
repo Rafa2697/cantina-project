@@ -11,7 +11,7 @@ export default function Home() {
                     <LogIn />
                 </Link>
                 <Link href="/pedidos" className="border w-64 items-center justify-center h-1/4 flex gap-1 rounded-md bg-orange-400 hover:bg-orange-600 focus:outline-2 focus:outline-offset-2 focus:outline-violet-500 active:bg-orange-700 text-white font-bold text-xl">
-                    Cardapio
+                    Cardápio
                 </Link>
             </div>
         </div>

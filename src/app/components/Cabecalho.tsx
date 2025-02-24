@@ -41,7 +41,7 @@ const Cabecalho: React.FC = () => {
                     <p>Olá, {session.user?.name}</p>
                 </div>
             ) : (
-                <div>
+                <div className='flex flex-col items-center space-y-2'>
                     <Image
                         src={session.user.image}
                         alt="perfil"
