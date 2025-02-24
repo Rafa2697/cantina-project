@@ -82,10 +82,18 @@ export default function CardapioClient() {
 
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-6">Selecione os itens para pedidos</h1>
-
+            <div className="sticky top-0 bg-white p-4 shadow-md rounded-lg mb-4">
+                <h1 className="sm:text-2xl font-bold mb-6 text-center">Selecione os itens para pedidos</h1>
+                {selectedItems.length > 0 && (
+                   <div>
+                       <h2 className="text-center sm:text-end text-green-800 font-bold">Items adicionados</h2>
+                       <p className="text-center sm:text-end text-xs sm:text-sm">Envie o pedido a cima</p>
+                   </div>
+                )}
+            </div>
             {/* Lista de itens selecionados */}
             {selectedItems.length > 0 && (
+
                 <div className="mb-6 p-4 bg-gray-100 rounded-lg">
                     <h2 className="text-xl font-bold mb-4 text-center">Itens Selecionados</h2>
                     <div className="space-y-4">
@@ -124,17 +132,17 @@ export default function CardapioClient() {
 
             {/* Grid de items do cardápio */}
             {data.length === 0 ? (
-                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-auto w-full place-items-center justify-center">
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-               </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-auto w-full place-items-center justify-center">
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {data.map((item) => (
