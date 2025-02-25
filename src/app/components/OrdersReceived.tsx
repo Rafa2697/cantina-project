@@ -40,21 +40,22 @@ export default function OrdersReceived({ refreshTrigger }: {refreshTrigger: bool
     },  [refreshTrigger]);
 
     const updateStatus = async (orderId: string) => {
+        const nowISOString = new Date().toISOString(); // Gera o timestamp atual
         try {
             const response = await fetch(`/api/pedidos`, {
                 method: "PUT",
                 headers: { 'Content-Type': "application/json" },
                 body: JSON.stringify({
                     id: orderId,
-                    status: "Concluído"
+                    status: "Concluído",
+                    updatedAt: nowISOString
                 })
             })
             if (response.ok) {
-                // Atualiza o estado local para refletir a mudança no status
+                // Atualiza o estado local para refletir a mudança no status e no horário de conclusão
                 setData(prevData =>
                     prevData.map(order =>
-                        order.id === orderId ? { ...order, status: "Concluído" } : order
-                    )
+                        order.id === orderId ? { ...order, status: "Concluído",updatedAt: nowISOString } : order)
                 );
             } else {
                 console.error("Erro ao atualizar o status do pedido");
@@ -85,7 +86,7 @@ export default function OrdersReceived({ refreshTrigger }: {refreshTrigger: bool
                                 Horário do pedido: {format(parseISO(order.createdAt), "dd/MM/yyyy 'às' HH:mm")}
                             </p>
                             <p className="text-gray-600 mb-4">
-                                Pedido feito: {format(parseISO(order.updatedAt), "dd/MM/yyyy 'às' HH:mm")}
+                                Pedido concluído: {format(parseISO(order.updatedAt), "dd/MM/yyyy 'às' HH:mm")}
                             </p>
                             <div className="space-y-2">
                                 {order.items.map((item) => (
