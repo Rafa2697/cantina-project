@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
+import Image from "next/image";
+
 interface DataItem {
     id: string;
     name: string;
     description: string;
     price: number;
+    imagemURL: string;
     categoryId: string;
     isAvailable: boolean;
 }
@@ -85,10 +88,10 @@ export default function CardapioClient() {
             <div className="sticky top-0 bg-white p-4 shadow-md rounded-lg mb-4">
                 <h1 className="sm:text-2xl font-bold mb-6 text-center">Selecione os itens para pedidos</h1>
                 {selectedItems.length > 0 && (
-                   <div>
-                       <h2 className="text-center sm:text-end text-green-800 font-bold">Items adicionados</h2>
-                       <p className="text-center sm:text-end text-xs sm:text-sm">Envie o pedido a cima</p>
-                   </div>
+                    <div>
+                        <h2 className="text-center sm:text-end text-green-800 font-bold">Items adicionados</h2>
+                        <p className="text-center sm:text-end text-xs sm:text-sm">Envie o pedido a cima</p>
+                    </div>
                 )}
             </div>
             {/* Lista de itens selecionados */}
@@ -148,7 +151,12 @@ export default function CardapioClient() {
                     {data.map((item) => (
                         <div key={item.id} className="bg-white rounded-lg shadow-md p-4">
                             <h2 className="text-xl font-semibold">{item.name}</h2>
-                            <p className="text-gray-600 mt-2 text-xs sm:text-lg">{item.description}</p>
+                            <div className="flex justify-between items-center">
+                                <p className="text-gray-600 mt-2 text-xs sm:text-lg">{item.description}</p>
+                                {item.imagemURL ? (<Image src={item.imagemURL} alt={item.name} width={96} height={96} className="w-20 mt-4 rounded-sm " />) : (
+                                    <div></div>
+                                )}
+                            </div>
                             <div className="mt-4 flex justify-between items-center">
                                 <span className="text-xs sm:text-lg font-bold">
                                     R$ {(Number(item.price).toFixed(2).replace('.', ','))}
