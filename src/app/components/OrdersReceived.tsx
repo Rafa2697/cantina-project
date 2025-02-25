@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-
+import { format, parseISO } from 'date-fns';
 interface DataItem {
     id: string;
+    createdAt: string;
+    updatedAt: string;
     userName: string;
     userEmail: string;
     status: string;
@@ -79,6 +81,12 @@ export default function OrdersReceived({ refreshTrigger }: {refreshTrigger: bool
                             <p className="text-gray-600 mb-2 text-sm">Cliente:{order.userName}</p>
                             <p className="text-gray-600 mb-4 text-xs">Identificação:{order.userEmail}</p>
                             <p className="text-gray-600 mb-4 text-sm">status:{order.status}</p>
+                            <p className="text-gray-600 mb-4">
+                                Horário do pedido: {format(parseISO(order.createdAt), "dd/MM/yyyy 'às' HH:mm")}
+                            </p>
+                            <p className="text-gray-600 mb-4">
+                                Pedido feito: {format(parseISO(order.updatedAt), "dd/MM/yyyy 'às' HH:mm")}
+                            </p>
                             <div className="space-y-2">
                                 {order.items.map((item) => (
                                     <div key={item.id} className="border-b pb-2">

@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Skeleton } from "@/components/ui/skeleton"
+import { format, parseISO } from 'date-fns';
 
 interface DataItem {
     id: string;
+    createdAt: string;
+    updatedAt: string;
     userName: string;
     userEmail: string;
     status: string;
@@ -42,27 +45,33 @@ export default function OrdersClient() {
 
     // Filtrar os pedidos com base no email da sessão
     const filteredData = data.filter(order => order.userEmail === emailSessao);
-  
+
     return (
         <div>
             {loading ? (
-                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10 w-full place-items-center justify-center">
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-                   <Skeleton className="w-60 h-52 rounded-sm" />
-               </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10 w-full place-items-center justify-center">
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                    <Skeleton className="w-60 h-52 rounded-sm" />
+                </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">
                     {filteredData.map((order) => (
                         <div key={order.id} className="bg-slate-100 rounded-lg shadow-lg p-4">
                             <p className="text-gray-600 mb-2">Cliente: {order.userName}</p>
                             <p className="text-gray-600 mb-4">Status: {order.status}</p>
+                            <p className="text-gray-600 mb-4">
+                                Horário: {format(parseISO(order.createdAt), "dd/MM/yyyy 'às' HH:mm")}
+                            </p>
+                            <p className="text-gray-600 mb-4">
+                                {order.status === "Concluído" ?  `Pronto ${format(parseISO(order.updatedAt), "dd/MM/yyyy 'às' HH:mm")}` : "Preparando..." }
+                            </p>
                             <div className="space-y-2">
                                 {order.items.map((item) => (
                                     <div key={item.id} className="border-b pb-2">
