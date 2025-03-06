@@ -3,20 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { Providers } from '../../providers/page';
 
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-    title: "Cantina UNISEPE",
-    description: "Aplicativo de pedidos para a Cantina do UNISEPE",
-};
 
 export default function PublicLayout({
     children,
@@ -24,14 +11,14 @@ export default function PublicLayout({
     children: React.ReactNode;
 }>) {
     return (
-       
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased bg-orange-300 text-black dark:bg-black dark:text-white `}
-            >
-                <Providers>
-                    {children}
-                </Providers>
-            </body>
-        
+
+        <div
+            className={`antialiased bg-orange-300  w-full`}
+        >
+            <Providers>
+                {children}
+            </Providers>
+        </div>
+
     );
 }
