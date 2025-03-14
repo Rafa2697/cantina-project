@@ -14,6 +14,11 @@ interface DataItem {
     isAvailable: boolean;
 }
 
+interface Category {
+    id: string;
+    name: string;
+}
+
 interface SelectedItem extends DataItem {
     quantity: number;
 }
@@ -22,6 +27,8 @@ export default function CardapioClient() {
     const [data, setData] = useState<DataItem[]>([]);
     const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
     const { data: session } = useSession();
+    const [selectedCategory, setSelectedCategory] = useState<string>('all');
+    const [categories, setCategories] = useState<Category[]>([]);
 
     const fetchData = async () => {
         try {
@@ -32,10 +39,39 @@ export default function CardapioClient() {
             console.error('Error ao buscar dados: ', error)
         }
     }
+    const fetchCategories = async () => {
+        try {
+            const response = await fetch("/api/categoriaAlimentos");
+            const result = await response.json();
+            setCategories(result);
+        } catch (error) {
+            console.error('Erro ao buscar categorias:', error);
+        }
+    };
 
     useEffect(() => {
         fetchData();
+        fetchCategories();
     }, []);
+
+
+    // Função para obter o nome da categoria pelo ID
+    const getCategoryName = (categoryId: string) => {
+        if (categoryId === 'all') return 'Todos';
+        const category = categories.find(cat => cat.id === categoryId);
+        return category ? category.name : categoryId;
+    };
+
+    //função para obter categorias únicas
+    const getUniqueCategories = () => {
+        const uniqueCategoryIds = ['all', ...new Set(data.map(item => item.categoryId))];
+        return uniqueCategoryIds;
+    };
+
+    //função para filtrar items
+    const filteredItems = data.filter(item =>
+        selectedCategory === 'all' ? true : item.categoryId === selectedCategory
+    )
 
     const handleAddItem = (item: DataItem) => {
         if (!item.isAvailable) return;
@@ -94,6 +130,20 @@ export default function CardapioClient() {
                     </div>
                 )}
             </div>
+            <div className="flex gap-2 mb-4 overflow-x-auto py-2">
+                {getUniqueCategories().map((categoryId) => (
+                    <button
+                        key={categoryId}
+                        onClick={() => setSelectedCategory(categoryId)}
+                        className={`px-4 py-2 rounded-full whitespace-nowrap
+                            ${selectedCategory === categoryId
+                            ? 'bg-blue-500 text-white' 
+                            : 'bg-gray-200 text-gray-700'}`}
+                    >
+                        {getCategoryName(categoryId)}
+                    </button>
+                ))}
+            </div>
             {/* Lista de itens selecionados */}
             {selectedItems.length > 0 && (
 
@@ -148,7 +198,7 @@ export default function CardapioClient() {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {data.map((item) => (
+                    {filteredItems.map((item) => (
                         <div key={item.id} className="bg-white rounded-lg shadow-md p-4">
                             <h2 className="text-xl font-semibold">{item.name}</h2>
                             <div className="flex justify-between items-center">

@@ -9,6 +9,10 @@ interface DataItem {
     categoryId: string;
     isAvailable: boolean;
 }
+interface Category {
+    id: string;
+    name: string;
+}
 import { ArrowLeftToLine, LogIn } from "lucide-react";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton"
@@ -17,6 +21,9 @@ import { Skeleton } from "@/components/ui/skeleton"
 export default function Cardapio() {
     const [data, setData] = useState<DataItem[]>([]);
     const [loading, setLoading] = useState(false)
+    const [selectedCategory, setSelectedCategory] = useState<string>('all');
+    const [categories, setCategories] = useState<Category[]>([]);
+
 
     const fetchData = async () => {
         setLoading(true)
@@ -29,12 +36,40 @@ export default function Cardapio() {
         }
         setLoading(false)
     }
+    const fetchCategories = async () => {
+        try {
+            const response = await fetch("/api/categoriaAlimentos");
+            const result = await response.json();
+            setCategories(result);
+        } catch (error) {
+            console.error('Erro ao buscar categorias:', error);
+        }
+    };
+
 
 
     useEffect(() => {
         fetchData();
+        fetchCategories();
     }, []);
 
+    // Função para obter o nome da categoria pelo ID
+    const getCategoryName = (categoryId: string) => {
+        if (categoryId === 'all') return 'Todos';
+        const category = categories.find(cat => cat.id === categoryId);
+        return category ? category.name : categoryId;
+    };
+
+    //função para obter categorias únicas
+    const getUniqueCategories = () => {
+        const uniqueCategoryIds = ['all', ...new Set(data.map(item => item.categoryId))];
+        return uniqueCategoryIds;
+    };
+
+    //função para filtrar items
+    const filteredItems = data.filter(item =>
+        selectedCategory === 'all' ? true : item.categoryId === selectedCategory
+    )
     return (
         <div className="container mx-auto p-4">
             <div className="flex justify-between items-center mb-4">
@@ -46,6 +81,21 @@ export default function Cardapio() {
                 </Link>
             </div>
             <h1 className="text-2xl font-bold mb-6 text-center">Cardápio</h1>
+            <div className="flex gap-2 mb-4 overflow-x-auto py-2">
+                {getUniqueCategories().map((categoryId) => (
+                    <button
+                        key={categoryId}
+                        onClick={() => setSelectedCategory(categoryId)}
+                        className={`px-4 py-2 rounded-full whitespace-nowrap
+                            ${selectedCategory === categoryId
+                            ? 'bg-blue-500 text-white' 
+                            : 'bg-gray-200 text-gray-700'}`}
+                    >
+                        {getCategoryName(categoryId)}
+                    </button>
+                ))}
+            </div>
+            
             {loading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-auto w-full place-items-center justify-center">
                     <Skeleton className="w-60 h-52 rounded-sm" />
@@ -61,7 +111,7 @@ export default function Cardapio() {
 
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {data.map((item) => (
+                    {filteredItems.map((item) => (
                         <div key={item.id} className="bg-white rounded-lg shadow-md p-4">
                             <h2 className="text-xl font-semibold">{item.name}</h2>
                             <p className="text-gray-600 mt-2">{item.description}</p>
