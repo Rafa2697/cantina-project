@@ -12,7 +12,7 @@ export default function Page() {
   }
 
   return (
-    <div className="w-full flex">
+    <div className="w-11/12 flex">
       
       {!session.user?.image ? (
         <div className="w-full">

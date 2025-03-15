@@ -120,7 +120,7 @@ export default function CardapioClient() {
     };
 
     return (
-        <div className="container mx-auto p-4">
+        <div className=" mx-auto p-4">
             <div className="sticky top-0 bg-white p-4 shadow-md rounded-lg mb-4">
                 <h1 className="sm:text-2xl font-bold mb-6 text-center">Selecione os itens para pedidos</h1>
                 {selectedItems.length > 0 && (
@@ -130,7 +130,7 @@ export default function CardapioClient() {
                     </div>
                 )}
             </div>
-            <div className="flex gap-2 mb-4 overflow-x-auto py-2">
+            <div className="flex gap-2 mb-4 overflow-x-auto py-2 ">
                 {getUniqueCategories().map((categoryId) => (
                     <button
                         key={categoryId}
