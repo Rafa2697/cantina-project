@@ -8,7 +8,7 @@ interface OrderItem {
     name: string;
     price: number;
     quantity: number;
-  }
+}
 
 export async function GET() {
     try {
@@ -17,7 +17,7 @@ export async function GET() {
         return NextResponse.json(pedidos, { status: 200 });
     } catch (error) {
         console.error('Erro ao buscar pedidos:', error);
-        
+
     }
 }
 
@@ -52,35 +52,60 @@ export async function POST(request: Request) {
     }
 }
 
-export async function PUT(request:Request) {
+export async function PUT(request: Request) {
     try {
         const data = await request.json()
-        const {id, status} = data
+        const { id, status } = data
 
         const updatedOrder = await prisma.order.update({
-            where:{id},
-            data:{
+            where: { id },
+            data: {
                 status
             }
         })
         return new Response(JSON.stringify({ data: updatedOrder }), { status: 200 });
     } catch (error) {
-        
+
         console.error(error)
     }
 }
 
-export async function DELETE() {
+export async function DELETE(request: Request) {
     try {
-                const pedidos = await prisma.order.deleteMany({
-                    where:{
-                        status:"Concluído"
-                    }
-                })
-        
-                return NextResponse.json(pedidos);
+        const body = await request.json();
+        const { id, deleteMany } = body;
+
+        // Se deleteMany for true, exclui todos os pedidos concluídos
+        if (deleteMany) {
+            const pedidos = await prisma.order.deleteMany({
+                where: {
+                    status: "Concluído"
+                }
+            });
+            return NextResponse.json({ 
+                message: "Pedidos concluídos deletados com sucesso", 
+                data: pedidos 
+            });
+        }
+
+        // Caso contrário, exclui apenas o pedido específico que esteja concluído
+        const pedidoDeletado = await prisma.order.delete({
+            where: {
+                id: id
+            }
+        });
+
+        return NextResponse.json({ 
+            message: "Pedido deletado com sucesso", 
+            data: pedidoDeletado 
+        });
     } catch (error) {
-        console.error(error)
+        console.error(error);
+        return NextResponse.json(
+            { error: "Erro ao deletar pedido(s)" },
+            { status: 500 }
+        );
     }
-    
 }
+
+

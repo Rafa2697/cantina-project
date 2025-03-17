@@ -38,6 +38,28 @@ export default function OrdersClient() {
         }
         setLoading(false)
     }
+
+    async function deletarPedidos(id: string) {
+        try {
+            const responseDelete = await fetch(`/api/pedidos`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({id, deleteMany: false})
+            })
+            if (responseDelete.ok) {
+                // Atualiza a lista de pedidos após deletar
+                fetchData();
+            } else {
+                console.error("Erro ao excluir pedido");
+            }
+
+        } catch (error) {
+            console.error("Erro ao excluir pedido:", error);
+        }
+    }
+
     useEffect(() => {
         fetchData();
     }, []);
@@ -70,7 +92,7 @@ export default function OrdersClient() {
                                 Horário: {format(parseISO(order.createdAt), "dd/MM/yyyy 'às' HH:mm")}
                             </p>
                             <p className="text-gray-600 mb-4">
-                                {order.status === "Concluído" ?  `Pronto ${format(parseISO(order.updatedAt), "dd/MM/yyyy 'às' HH:mm")}` : "Preparando..." }
+                                {order.status === "Concluído" ? `Pronto ${format(parseISO(order.updatedAt), "dd/MM/yyyy 'às' HH:mm")}` : "Preparando..."}
                             </p>
                             <div className="space-y-2">
                                 {order.items.map((item) => (
@@ -85,6 +107,11 @@ export default function OrdersClient() {
                             <p className="mt-4 text-lg font-bold">
                                 Total: R$ {(Number(order.totalPrice).toFixed(2).replace('.', ','))}
                             </p>
+                            <button
+                                onClick={() => deletarPedidos(order.id)}
+                                className={`px-4 py-2 rounded-md bg-red-500 m-2 text-center text-white`}>
+                                Cancelar pedido
+                            </button>
                         </div>
                     ))}
                 </div>

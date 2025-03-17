@@ -9,6 +9,7 @@ export default function DeleteOrders({ onDeleteCompleted }: {onDeleteCompleted: 
                 headers: {
                     "Content-Type": "application/json"
                 },
+                body: JSON.stringify({ deleteMany: true })
             })
             // Chama o callback para atualizar os pedidos na tela
             onDeleteCompleted(); // Notifica o pai para atualizar os pedidos
