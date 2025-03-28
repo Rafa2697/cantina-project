@@ -16,7 +16,7 @@ interface Category {
 import { ArrowLeftToLine, LogIn } from "lucide-react";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton"
-
+import { toast } from "sonner"
 
 export default function Cardapio() {
     const [data, setData] = useState<DataItem[]>([]);
@@ -31,6 +31,12 @@ export default function Cardapio() {
             const response = await fetch("/api/cadastrarAlimento"); // Atualize o endpoint conforme necessário
             const result: DataItem[] = await response.json();
             setData(result);
+            toast("Cantina aberta a parte das 18Hr.", {
+                action: {
+                  label: "Fechar",
+                  onClick: () => console.log("Fechar"),
+                },
+              })
         } catch (error) {
             console.error('Error ao buscar dados: ', error)
         }
