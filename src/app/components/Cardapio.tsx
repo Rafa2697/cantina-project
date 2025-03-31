@@ -31,7 +31,7 @@ export default function Cardapio() {
             const response = await fetch("/api/cadastrarAlimento"); // Atualize o endpoint conforme necessário
             const result: DataItem[] = await response.json();
             setData(result);
-            toast("Cantina aberta a parte das 18Hr.", {
+            toast("Cantina aberta a partir das 18h.", {
                 action: {
                   label: "Fechar",
                   onClick: () => console.log("Fechar"),
