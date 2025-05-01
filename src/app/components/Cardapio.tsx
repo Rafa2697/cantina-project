@@ -71,7 +71,7 @@ export default function Cardapio() {
         selectedCategory === 'all' ? true : item.categoryId === selectedCategory
     )
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-4 min-h-screen">
             <div className="flex justify-between items-center mb-4">
                 <Link href="/">
                     <ArrowLeftToLine className="hover:text-red-600" />
