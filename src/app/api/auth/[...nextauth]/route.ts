@@ -2,6 +2,7 @@ import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client"
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient()
 
@@ -48,7 +49,7 @@ const handler = NextAuth({
           
         }
         // Compara a senha fornecida com a senha criptografada armazenada
-        const isValid = password === user.password;
+        const isValid = await bcrypt.compare(password, user.password);
 
         if (!isValid) {
           return null;
