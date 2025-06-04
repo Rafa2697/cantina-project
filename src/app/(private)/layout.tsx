@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Área do Aluno",
+    title: "Cantina FASUPI",
     description: "Aplicativo de pedidos para a Cantina do UNISEPE",
 };
 

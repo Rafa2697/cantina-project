@@ -143,7 +143,7 @@ export default function CadastroItens() {
     }
 
     return (
-        <div className="container mx-auto p-4 flex flex-col sm:flex-row gap-3">
+        <div className="container min-h-screen mx-auto p-4 flex flex-col sm:flex-row gap-3 justify-center items-start">
             <div className="w-full sm:w-1/2">
                 <h1 className="text-2xl font-bold mb-6 text-center">Cadastrar Itens</h1>
 
@@ -247,9 +247,9 @@ export default function CadastroItens() {
             {loading ? (
                 <p>Carregando...</p>
             ) : (
-                <div className="w-full sm:w-1/2">
+                <div className="w-full sm:w-1/2 ">
                     <h1 className="text-2xl font-bold mb-6 text-center">Itens já cadastrados</h1>
-                    <ul className="space-y-4  overflow-y-scroll h-auto">
+                    <ul className="space-y-4 h-screen overflow-y-scroll ">
                         {data.map((item) => (
                             <li
                                 key={item.id}
