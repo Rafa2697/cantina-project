@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Claro! Aqui está um exemplo de README.md baseado no seu package.json para o projeto cantina-project:
 
-## Getting Started
+---
 
-First, run the development server:
+# cantina-project
+
+Projeto privado desenvolvido utilizando [Next.js](https://nextjs.org/) com integração ao [Prisma](https://www.prisma.io/), autenticação com [NextAuth.js](https://next-auth.js.org/), estilização com [Tailwind CSS](https://tailwindcss.com/) e outros recursos modernos do ecossistema React.
+
+## Índice
+
+- [Sobre](#sobre)
+- [Tecnologias](#tecnologias)
+- [Scripts Disponíveis](#scripts-disponíveis)
+- [Como Rodar](#como-rodar)
+- [Licença](#licença)
+
+## Sobre
+
+Este projeto tem como objetivo...
+
+> _Descreva aqui o objetivo do seu projeto, funcionalidades principais e contexto._
+
+## Tecnologias
+
+- [Next.js 15](https://nextjs.org/)
+- [React 19](https://react.dev/)
+- [Prisma ORM](https://www.prisma.io/)
+- [NextAuth.js](https://next-auth.js.org/) (autenticação)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Radix UI](https://www.radix-ui.com/)
+- [React Hook Form](https://react-hook-form.com/)
+- [Lucide React Icons](https://lucide.dev/)
+- [date-fns](https://date-fns.org/)
+- [bcrypt / bcryptjs](https://www.npmjs.com/package/bcrypt)
+- [Sonner](https://sonner.emilkowal.ski/) (notificações)
+- [TypeScript](https://www.typescriptlang.org/)
+
+## Scripts Disponíveis
+
+No diretório do projeto, você pode rodar:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+Roda o ambiente de desenvolvimento com Next.js e Turbopack.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```bash
+npm run build
+```
+Gera os arquivos de produção (inclui `prisma generate`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run start
+```
+Inicia o servidor Next.js em modo produção.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+```
+Executa o linter para checar problemas no código.
 
-## Learn More
+## Dependências
 
-To learn more about Next.js, take a look at the following resources:
+Consulte o arquivo [`package.json`](./package.json) para ver todas as dependências e versões utilizadas.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Como Rodar
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Instale as dependências:
+    ```bash
+    npm install
+    ```
 
-## Deploy on Vercel
+2. Configure as variáveis de ambiente conforme necessário (crie um arquivo `.env`).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Gere os arquivos do Prisma:
+    ```bash
+    npx prisma generate
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Rode o projeto localmente:
+    ```bash
+    npm run dev
+    ```
+
+## Licença
+
+Projeto privado. Todos os direitos reservados.
+
+---
+
+Se quiser adicionar uma seção "Como contribuir" ou exemplos de uso, me avise!
