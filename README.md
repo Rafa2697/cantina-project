@@ -1,6 +1,4 @@
-Claro! Aqui está um exemplo de README.md baseado no seu package.json para o projeto cantina-project:
 
----
 
 # cantina-project
 
