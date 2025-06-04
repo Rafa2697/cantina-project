@@ -18,7 +18,9 @@ Projeto privado desenvolvido utilizando [Next.js](https://nextjs.org/) com integ
 
 Este projeto tem como objetivo...
 
-> _Descreva aqui o objetivo do seu projeto, funcionalidades principais e contexto._
+> _O aplicativo web da Cantina da Faculdade Sul Paulista de Itanhaém foi 
+desenvolvido para otimizar o processo de pedidos durante o intervalo, proporcionando 
+uma experiência mais ágil e organizada para os alunos._
 
 ## Tecnologias
 
