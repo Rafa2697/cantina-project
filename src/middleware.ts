@@ -5,6 +5,7 @@ import { MiddlewareConfig, NextRequest, NextResponse } from "next/server"
 
 const publicRoutes = [
     {path: '/signIn', wheAuthenticated: 'redirect'}, //Ele não pode acessar o sign-in se já estiver logado
+    {path: '/signInAdmin', wheAuthenticated: 'redirect'}, //Ele não pode acessar o sign-in se já estiver logado
     {path: '/', wheAuthenticated: 'next'}, //Ele não pode acessar o register se já estiver logado
     {path: '/pedidos', wheAuthenticated: 'next'}, // Ele pode acessar o pricing se não estiver logado
 ] as const

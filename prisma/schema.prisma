@@ -15,82 +15,82 @@ model Admin {
   password  String?
   image     String?
   createdAt DateTime @default(now())
+  unidade   String?
 }
 
 model User {
-  id        String    @id @default(cuid()) // NextAuth usa "cuid" por padrão
+  id        String    @id @default(cuid())
   name      String?
   email     String?   @unique
-  password  String?
-  image     String?
-  accounts  Account[]
-  sessions  Session[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  image     String?
+  password  String?
+  accounts  Account?
+  sessions  Session[]
 }
 
 model Account {
   id                String  @id @default(cuid())
   userId            String  @unique
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   type              String
   provider          String
   providerAccountId String  @unique
   refresh_token     String?
   access_token      String?
   expires_at        Int?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
   userId       String
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model MenuItem {
-  id          String      @id @default(uuid())
+  id          String   @id @default(uuid())
   name        String
   description String?
   price       Decimal
-  category    Category    @relation(fields: [categoryId], references: [id])
   categoryId  String
-  isAvailable Boolean     @default(true)
+  isAvailable Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   imagemURL   String?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  unidade     String?
+  category    Category @relation(fields: [categoryId], references: [id])
 }
 
 model Category {
   id        String     @id @default(uuid())
   name      String     @unique
-  items     MenuItem[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  items     MenuItem[]
 }
 
 model Order {
-  id         String    @id @default(uuid()) // ID único do pedido
-  userName   String    // Nome do usuário autenticado pelo Google
-  userEmail  String    // Email do usuário autenticado pelo Google
-  status     String    @default("PENDENTE") // Status do pedido
-  totalPrice Decimal   // Preço total do pedido
-  createdAt  DateTime  @default(now()) // Data de criação
-  updatedAt  DateTime  @updatedAt // Data de atualização
-
-  items      OrderItem[] // Relacionamento com os itens do pedido
+  id         String      @id @default(uuid())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  totalPrice Decimal
+  userEmail  String
+  userName   String
+  status     String      @default("PENDENTE")
+  items      OrderItem[]
 }
 
 model OrderItem {
-  id       String  @id @default(uuid()) // ID único do item no pedido
-  orderId  String  // Chave estrangeira para o pedido
-  foodId   String  // ID do alimento
-  name     String  // Nome do alimento
-  price    Decimal // Preço do item no momento do pedido
-  quantity Int     // Quantidade do item
-  subtotal Decimal // price * quantity
-
+  id       String  @id @default(uuid())
+  orderId  String
+  quantity Int
+  price    Decimal
+  foodId   String
+  name     String
+  subtotal Decimal
   order    Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
 

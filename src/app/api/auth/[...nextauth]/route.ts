@@ -14,7 +14,6 @@ const handler = NextAuth({
 
   // Configure one or more authentication providers
   providers: [
-
     CredentialsProvider({
       name: 'Credentials',
       credentials:
@@ -46,7 +45,6 @@ const handler = NextAuth({
 
         if (!user) {
           return null;
-          
         }
         // Compara a senha fornecida com a senha criptografada armazenada
         const isValid = await bcrypt.compare(password, user.password);
