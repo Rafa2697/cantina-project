@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react"
+import { get } from "react-hook-form";
 
 interface DataItem {
     id: string;
@@ -8,6 +10,7 @@ interface DataItem {
     imagemURL: string;
     categoryId: string;
     isAvailable: boolean;
+    unidade: string;
 }
 interface DataCategory {
     id: string;
@@ -15,6 +18,8 @@ interface DataCategory {
 }
 
 export default function CadastroItens() {
+
+
     const [data, setData] = useState<DataItem[]>([]);
     const [category, setCategory] = useState<DataCategory[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -65,16 +70,31 @@ export default function CadastroItens() {
             [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
         }));
     };
+    const { data: sessionData } = useSession()
+    const getUnidade = () => {
+        if (!sessionData?.user?.name) return '';
+
+        if (sessionData.user.name === 'fpbe') return 'peruibe';
+        if (sessionData.user.name === 'fasupi') return 'itanhaem';
+
+        return '';
+    };
+
+    const unidade = getUnidade();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Aqui você pode adicionar a lógica para enviar os dados
+
+        if (!unidade) {
+            console.error("Unidade não definida");
+            return;
+        }
 
         try {
             if (editingId) {
                 const updateData = {
                     ...formData,
-                    id: editingId
+                    id: editingId,
                 };
 
                 await fetch('/api/cadastrarAlimento', {
@@ -83,11 +103,17 @@ export default function CadastroItens() {
                     body: JSON.stringify(updateData)
                 });
             } else {
+
+                const createdata = {
+                    ...formData,
+                    unidade: unidade,
+                };
+                console.log(unidade)
                 await fetch("/api/cadastrarAlimento", {
                     method: "POST",
-                    headers: { "Content-Type": "applicatoin/json" },
-                    body: JSON.stringify(formData)
-                })
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(createdata)
+                });
             }
             setEditingId(null);
             fetchData()
@@ -250,7 +276,9 @@ export default function CadastroItens() {
                 <div className="w-full sm:w-1/2 ">
                     <h1 className="text-2xl font-bold mb-6 text-center">Itens já cadastrados</h1>
                     <ul className="space-y-4 h-screen overflow-y-scroll ">
-                        {data.map((item) => (
+                        {data
+                        .filter(item => item.unidade === getUnidade())
+                        .map((item) => (
                             <li
                                 key={item.id}
                                 className="flex flex-col md:flex-row items-center justify-between p-4 border border-teal-950 rounded-md"

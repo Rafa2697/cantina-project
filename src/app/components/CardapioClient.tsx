@@ -12,6 +12,7 @@ interface DataItem {
     imagemURL: string;
     categoryId: string;
     isAvailable: boolean;
+    unidade: string;
 }
 
 interface Category {
@@ -28,6 +29,7 @@ export default function CardapioClient() {
     const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
     const { data: session } = useSession();
     const [selectedCategory, setSelectedCategory] = useState<string>('all');
+    const [selectedUnidade, setSelectedUnidade] = useState<string>('all');
     const [categories, setCategories] = useState<Category[]>([]);
 
     const fetchData = async () => {
@@ -35,6 +37,12 @@ export default function CardapioClient() {
             const response = await fetch("/api/cadastrarAlimento");
             const result: DataItem[] = await response.json();
             setData(result);
+             toast("Selecione a unidade antes de fazer o pedido.", {
+        action: {
+            label: "Fechar",
+            onClick: () => console.log("Fechar"),
+        },
+    })
         } catch (error) {
             console.error('Error ao buscar dados: ', error)
         }
@@ -70,8 +78,9 @@ export default function CardapioClient() {
 
     //função para filtrar items
     const filteredItems = data.filter(item =>
-        selectedCategory === 'all' ? true : item.categoryId === selectedCategory
-    )
+        (selectedCategory === 'all' ? true : item.categoryId === selectedCategory) &&
+        (selectedUnidade === 'all' ? true : item.unidade === selectedUnidade)
+    );
 
     const handleAddItem = (item: DataItem) => {
         if (!item.isAvailable) return;
@@ -130,19 +139,32 @@ export default function CardapioClient() {
                     </div>
                 )}
             </div>
-            <div className="flex gap-2 mb-4 overflow-x-auto py-2 ">
-                {getUniqueCategories().map((categoryId) => (
-                    <button
-                        key={categoryId}
-                        onClick={() => setSelectedCategory(categoryId)}
-                        className={`px-4 py-2 rounded-full whitespace-nowrap
-                            ${selectedCategory === categoryId
-                            ? 'bg-blue-500 text-white' 
-                            : 'bg-gray-200 text-gray-700'}`}
+            <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+                <div className="flex gap-2 mb-4 overflow-x-auto py-2 ">
+                    {getUniqueCategories().map((categoryId) => (
+                        <button
+                            key={categoryId}
+                            onClick={() => setSelectedCategory(categoryId)}
+                            className={`px-4 py-2 rounded-full whitespace-nowrap
+                                ${selectedCategory === categoryId
+                                    ? 'bg-blue-500 text-white'
+                                    : 'bg-gray-200 text-gray-700'}`}
+                        >
+                            {getCategoryName(categoryId)}
+                        </button>
+                    ))}
+                </div>
+                <div className="w-full max-w-xs mb-4">
+                    <select
+                        value={selectedUnidade}
+                        onChange={(e) => setSelectedUnidade(e.target.value)}
+                        className="w-full p-2 border rounded-md bg-white text-gray-900"
                     >
-                        {getCategoryName(categoryId)}
-                    </button>
-                ))}
+                        <option value="all">Todas as Unidades</option>
+                        <option value="peruibe">Peruíbe</option>
+                        <option value="itanhaem">Itanhaém</option>
+                    </select>
+                </div>
             </div>
             {/* Lista de itens selecionados */}
             {selectedItems.length > 0 && (

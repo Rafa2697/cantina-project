@@ -8,6 +8,7 @@ interface DataItem {
     imagemURL: string;
     categoryId: string;
     isAvailable: boolean;
+    unidade: string;
 }
 interface Category {
     id: string;
@@ -22,9 +23,10 @@ export default function Cardapio() {
     const [data, setData] = useState<DataItem[]>([]);
     const [loading, setLoading] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState<string>('all');
+    const [selectedUnidade, setSelectedUnidade] = useState<string>('all');
     const [categories, setCategories] = useState<Category[]>([]);
 
-
+   
     const fetchData = async () => {
         setLoading(true)
         try {
@@ -33,10 +35,10 @@ export default function Cardapio() {
             setData(result);
             toast("Cantina aberta a partir das 18h.", {
                 action: {
-                  label: "Fechar",
-                  onClick: () => console.log("Fechar"),
+                    label: "Fechar",
+                    onClick: () => console.log("Fechar"),
                 },
-              })
+            })
         } catch (error) {
             console.error('Error ao buscar dados: ', error)
         }
@@ -57,6 +59,7 @@ export default function Cardapio() {
     useEffect(() => {
         fetchData();
         fetchCategories();
+        
     }, []);
 
     // Função para obter o nome da categoria pelo ID
@@ -74,8 +77,9 @@ export default function Cardapio() {
 
     //função para filtrar items
     const filteredItems = data.filter(item =>
-        selectedCategory === 'all' ? true : item.categoryId === selectedCategory
-    )
+        (selectedCategory === 'all' ? true : item.categoryId === selectedCategory) &&
+        (selectedUnidade === 'all' ? true : item.unidade === selectedUnidade)
+    );
     return (
         <div className="container mx-auto p-4 min-h-screen">
             <div className="flex justify-between items-center mb-4">
@@ -87,21 +91,34 @@ export default function Cardapio() {
                 </Link>
             </div>
             <h1 className="text-2xl font-bold mb-6 text-center">Cardápio</h1>
-            <div className="flex gap-2 mb-4 overflow-x-auto py-2">
-                {getUniqueCategories().map((categoryId) => (
-                    <button
-                        key={categoryId}
-                        onClick={() => setSelectedCategory(categoryId)}
-                        className={`px-4 py-2 rounded-full whitespace-nowrap
-                            ${selectedCategory === categoryId
-                            ? 'bg-blue-500 text-white' 
-                            : 'bg-gray-200 text-gray-700'}`}
+            <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+                <div className="flex gap-2 mb-4 overflow-x-auto py-2">
+                    {getUniqueCategories().map((categoryId) => (
+                        <button
+                            key={categoryId}
+                            onClick={() => setSelectedCategory(categoryId)}
+                            className={`px-4 py-2 rounded-full whitespace-nowrap
+                                ${selectedCategory === categoryId
+                                    ? 'bg-blue-500 text-white'
+                                    : 'bg-gray-200 text-gray-700'}`}
+                        >
+                            {getCategoryName(categoryId)}
+                        </button>
+                    ))}
+                </div>
+                <div className="w-full max-w-xs mb-4">
+                    <select
+                        value={selectedUnidade}
+                        onChange={(e) => setSelectedUnidade(e.target.value)}
+                        className="w-full p-2 border rounded-md bg-white text-gray-900"
                     >
-                        {getCategoryName(categoryId)}
-                    </button>
-                ))}
+                        <option value="all">Todas as Unidades</option>
+                        <option value="peruibe">Peruíbe</option>
+                        <option value="itanhaem">Itanhaém</option>
+                    </select>
+                </div>
             </div>
-            
+
             {loading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-auto w-full place-items-center justify-center">
                     <Skeleton className="w-60 h-52 rounded-sm" />

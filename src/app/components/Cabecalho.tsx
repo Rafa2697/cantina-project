@@ -17,8 +17,6 @@ const Cabecalho: React.FC = () => {
 
         fetchSession();
     }, []);
-
-    console.log(session?.user?.image)
     if (!session) {
         return (
             <div className="flex flex-col items-center space-y-2 px-4 py-2 text-black">
@@ -41,17 +39,16 @@ const Cabecalho: React.FC = () => {
                     <p>Olá, {session.user?.name}</p>
                 </div>
             ) : (
-                <div className='flex flex-col items-center space-y-2'>
+                <div className='flex items-center justify-center flex-col space-y-2'>
                     <Image
                         src={session.user.image}
-                        alt="perfil"
-                        width={64}  // 16 * 4 (w-16)
-                        height={64} // 16 * 4 (h-16)
-                        className='rounded-full object-cover'
-                        priority
+                        alt={session.user.name}
+                        width={48}  // 16 * 4 (w-16)
+                        height={48} // 16 * 4 (h-16)
+                        className='rounded-full'
+
                     />
-                    <p>Olá, {session.user?.name}</p>
-                    <p>{session?.user?.email}</p>
+                   
                 </div>
             )}
 

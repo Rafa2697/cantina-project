@@ -8,13 +8,17 @@ import {
     SidebarGroupContent,
     SidebarMenu,
     SidebarMenuItem,
-    SidebarMenuButton
+    SidebarMenuButton,
+    SidebarHeader
 } from "@/components/ui/sidebar";
 
 import { signOut } from "next-auth/react"
 import Cabecalho from "./Cabecalho";
 import { Home, ShoppingBag, LogOut, SquareMenu } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { getSession } from 'next-auth/react';
+import { Session } from 'next-auth'
+import React, { useEffect, useState } from 'react';
 
 // Menu items.<SquareMenu />
 const items = [
@@ -42,10 +46,20 @@ const items = [
 
 export function AppSidebar() {
     const router = useRouter();
+    const [session, setSession] = useState<Session | null>(null);
+
+    useEffect(() => {
+        const fetchSession = async () => {
+            const sessionData = await getSession();
+            setSession(sessionData);
+        };
+
+        fetchSession();
+    }, []);
 
     const handleLogout = async () => {
         try {
-          await signOut({ redirect: false })
+            await signOut({ redirect: false })
             const response = await fetch("/api/auth/logout", { method: "GET" });
             if (response.ok) {
                 router.push("/"); // Redireciona para a página inicial após o logout
@@ -56,11 +70,16 @@ export function AppSidebar() {
     };
 
     return (
-        <Sidebar>
+        <Sidebar collapsible="icon" variant="floating">
+
             <SidebarContent>
+                <SidebarHeader>
+                    <Cabecalho />
+                </SidebarHeader>
+                <SidebarGroupLabel className="mx-auto">{session?.user.name}</SidebarGroupLabel>
+                <SidebarGroupLabel className="mx-auto">{session?.user.email}</SidebarGroupLabel>
                 <SidebarGroup>
                     <SidebarGroupLabel>Menu</SidebarGroupLabel>
-                    <Cabecalho />
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {items.map((item) => (
