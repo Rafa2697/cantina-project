@@ -65,7 +65,7 @@ export default function OrdersReceived({ refreshTrigger }: {refreshTrigger: bool
         }
     }
 
-    
+    console.log("Dados recebidos:", data);
 
     return (
         <div>

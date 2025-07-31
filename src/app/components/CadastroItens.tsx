@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react"
-import { get } from "react-hook-form";
 
 interface DataItem {
     id: string;

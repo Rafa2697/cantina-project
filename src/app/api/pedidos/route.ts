@@ -65,7 +65,6 @@ export async function PUT(request: Request) {
         })
         return new Response(JSON.stringify({ data: updatedOrder }), { status: 200 });
     } catch (error) {
-
         console.error(error)
     }
 }

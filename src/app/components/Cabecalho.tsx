@@ -36,7 +36,14 @@ const Cabecalho: React.FC = () => {
 
             {!session.user?.image ? (
                 <div>
-                    <p>Olá, {session.user?.name}</p>
+                     <Image
+                        src={"https://media.istockphoto.com/id/1337144146/pt/vetorial/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=_XeYoSJQIN7GrE08cUQDJCo3U7yvoEp5OKpbhQzpmC0="}
+                        alt={session.user.name}
+                        width={48}  // 16 * 4 (w-16)
+                        height={48} // 16 * 4 (h-16)
+                        className='rounded-full'
+
+                    />
                 </div>
             ) : (
                 <div className='flex items-center justify-center flex-col space-y-2'>
