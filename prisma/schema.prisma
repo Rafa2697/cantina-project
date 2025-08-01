@@ -90,6 +90,7 @@ model OrderItem {
   price    Decimal
   foodId   String
   name     String
+  unidade  String?
   subtotal Decimal
   order    Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }

@@ -8,6 +8,7 @@ interface OrderItem {
     name: string;
     price: number;
     quantity: number;
+    unidade?: string;
 }
 
 export async function GET() {
@@ -34,12 +35,14 @@ export async function POST(request: Request) {
                 status: "PENDING",
                 totalPrice,
                 items: {
-                    create: items.map((item: OrderItem) => ({
+                    create: items.map((item: OrderItem & { unidade: string }) => ({
                         foodId: item.id,
                         name: item.name,
                         price: item.price,
                         quantity: item.quantity,
                         subtotal: item.price * item.quantity,
+                        unidade: item.unidade
+                        
                     }))
                 },
             },
