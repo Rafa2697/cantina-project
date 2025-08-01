@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -31,18 +31,24 @@ export default function CardapioClient() {
     const [selectedCategory, setSelectedCategory] = useState<string>('all');
     const [selectedUnidade, setSelectedUnidade] = useState<string>('all');
     const [categories, setCategories] = useState<Category[]>([]);
+    const isFirstLoad = useRef(true);
+
 
     const fetchData = async () => {
         try {
             const response = await fetch("/api/cadastrarAlimento");
             const result: DataItem[] = await response.json();
             setData(result);
-             toast("Selecione a unidade antes de fazer o pedido.", {
-        action: {
-            label: "Fechar",
-            onClick: () => console.log("Fechar"),
-        },
-    })
+             if (isFirstLoad.current) {
+                toast("Selecione a unidade antes de fazer o pedido.", {
+                    action: {
+                        label: "Fechar",
+                        onClick: () => console.log("Fechar"),
+                    },
+                });
+                isFirstLoad.current = false;
+            }
+
         } catch (error) {
             console.error('Error ao buscar dados: ', error)
         }
@@ -60,6 +66,7 @@ export default function CardapioClient() {
     useEffect(() => {
         fetchData();
         fetchCategories();
+
     }, []);
 
 
