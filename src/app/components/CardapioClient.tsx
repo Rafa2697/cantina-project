@@ -86,6 +86,15 @@ export default function CardapioClient() {
         if (!item.isAvailable) return;
 
         setSelectedItems(prev => {
+            // Verifica se já existe algum item selecionado
+            if (prev.length > 0) {
+                // Verifica se a unidade do novo item é diferente dos itens já selecionados
+                if (prev[0].unidade !== item.unidade) {
+                    toast.error("Não é possível adicionar itens de unidades diferentes no mesmo pedido!");
+                    return prev;
+                }
+            }
+
             const existingItem = prev.find(i => i.id === item.id);
             if (existingItem) {
                 return prev.map(i =>
@@ -170,7 +179,10 @@ export default function CardapioClient() {
             {selectedItems.length > 0 && (
 
                 <div className="mb-6 p-4 bg-gray-100 rounded-lg">
-                    <h2 className="text-xl font-bold mb-4 text-center">Itens Selecionados</h2>
+                    <h2 className="text-xl font-bold mb-2 text-center">Itens Selecionados</h2>
+                    <p className="text-center text-sm text-gray-600 mb-4">
+                        Unidade: {selectedItems[0].unidade.charAt(0).toUpperCase() + selectedItems[0].unidade.slice(1)}
+                    </p>
                     <div className="space-y-4">
                         {selectedItems.map(item => (
                             <div key={item.id} className="flex flex-wrap justify-center sm:justify-between items-center border-b-2 pb-2 gap-2 text-sm sm:text-base">
@@ -223,6 +235,7 @@ export default function CardapioClient() {
                     {filteredItems.map((item) => (
                         <div key={item.id} className="bg-white rounded-lg shadow-md p-4">
                             <h2 className="text-xl font-semibold">{item.name}</h2>
+                            <p className="text-gray-600 mt-2 ">Unidade: {item.unidade}</p>
                             <div className="flex justify-between items-center">
                                 <p className="text-gray-600 mt-2 text-xs sm:text-lg">{item.description}</p>
                                 {item.imagemURL ? (<Image src={item.imagemURL} alt={item.name} width={96} height={96} className="w-20 mt-4 rounded-sm " />) : (
