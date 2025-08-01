@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Cantina FASUPI",
+    title: "Cantina UNISEPE",
     description: "Aplicativo de pedidos para a Cantina do UNISEPE",
 };
 
@@ -29,13 +29,13 @@ export default function PrivateLayout({
     return (
 
         <div
-            className={`${geistSans.variable} ${geistMono.variable} antialiased `}
+            className={`${geistSans.variable} ${geistMono.variable} antialiased bg-orange-600 bg-opacity-30`}
         >
             <SidebarProvider>
 
                 <AppSidebar />
-                    <SidebarTrigger />
-              
+                <SidebarTrigger />
+
                 <Providers>
 
                     {children}

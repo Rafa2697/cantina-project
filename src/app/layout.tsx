@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br ">
 
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased  mx-auto`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased  mx-auto bg-fundo-mobile sm:bg-fundo-desktop bg-cover bg-center bg-no-repeat `}>
         <Providers>
           {children}
           <Toaster />

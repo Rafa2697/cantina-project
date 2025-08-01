@@ -170,7 +170,7 @@ export default function CadastroItens() {
     return (
         <div className="container min-h-screen mx-auto p-4 flex flex-col sm:flex-row gap-3 justify-center items-start">
             <div className="w-full sm:w-1/2">
-                <h1 className="text-2xl font-bold mb-6 text-center">Cadastrar Itens</h1>
+                <h1 className="text-2xl  md:w-1/2 font-bold mb-6 text-center text-white py-1 rounded-sm bg-orange-800 m-auto">Cadastrar Itens</h1>
 
                 <form onSubmit={handleSubmit} className="  bg-white p-3 rounded-lg shadow-md border border-gray-300">
                     <div className="mb-4">
@@ -273,14 +273,14 @@ export default function CadastroItens() {
                 <p>Carregando...</p>
             ) : (
                 <div className="w-full sm:w-1/2 ">
-                    <h1 className="text-2xl font-bold mb-6 text-center">Itens já cadastrados</h1>
-                    <ul className="space-y-4 h-screen overflow-y-scroll ">
+                    <h1 className="text-2xl md:w-1/2 font-bold mb-6 text-center text-white py-1 rounded-sm bg-orange-800 m-auto">Itens já cadastrados</h1>
+                    <ul className="space-y-4 h-screen overflow-y-scroll">
                         {data
                         .filter(item => item.unidade === getUnidade())
                         .map((item) => (
                             <li
                                 key={item.id}
-                                className="flex flex-col md:flex-row items-center justify-between p-4 border border-teal-950 rounded-md"
+                                className="flex flex-col md:flex-row items-center justify-between p-4 border  rounded-md bg-white shadow-md mx-2"
                             >
                                 <div>
                                     <p className="text-sm md:text-lg font-medium">{item.name}</p>

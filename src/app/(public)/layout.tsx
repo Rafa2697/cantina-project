@@ -12,7 +12,7 @@ export default function PublicLayout({
     return (
 
         <div
-            className={`antialiased bg-orange-300  w-full`}
+            className={`antialiased bg-blue-400 bg-opacity-40 w-full`}
         >
             <Providers>
                 {children}

@@ -84,13 +84,13 @@ export default function Cardapio() {
         <div className="container mx-auto p-4 min-h-screen">
             <div className="flex justify-between items-center mb-4">
                 <Link href="/">
-                    <ArrowLeftToLine className="hover:text-red-600" />
+                    <ArrowLeftToLine className="hover:text-red-600 text-red-500 bg-white w-20 hover:w-24 rounded-full transition-all" />
                 </Link>
                 <Link href="/dashboard">
-                    <LogIn className="hover:text-green-500" />
+                    <LogIn className="hover:text-green-600 text-green-500 bg-white w-20 hover:w-24 rounded-full transition-all" />
                 </Link>
             </div>
-            <h1 className="text-2xl font-bold mb-6 text-center">Cardápio</h1>
+            <h1 className="text-2xl md:w-2/12 font-bold mb-6 text-center text-white py-1 rounded-sm bg-blue-800 bg-opacity-30 m-auto">Cardápio</h1>
             <div className="flex flex-col md:flex-row justify-between items-center mb-4">
                 <div className="flex gap-2 mb-4 overflow-x-auto py-2">
                     {getUniqueCategories().map((categoryId) => (
