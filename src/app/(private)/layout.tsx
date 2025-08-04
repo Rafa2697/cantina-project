@@ -29,7 +29,7 @@ export default function PrivateLayout({
     return (
 
         <div
-            className={`${geistSans.variable} ${geistMono.variable} antialiased bg-orange-600 bg-opacity-30`}
+            className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-900 bg-opacity-60`}
         >
             <SidebarProvider>
 
